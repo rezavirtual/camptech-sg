@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Outdoor Electronics & Power Singapore - Best Camping Gear & Reviews (2026)</title>
   <meta name="description" content="Rugged solar power banks, 1000-lumen lanterns, waterproof headlamps, mosquito repellers and campsite fans.">
-  <link rel="stylesheet" href="../assets/styles.css?v=20261104_v2">
+  <link rel="stylesheet" href="../assets/styles.css?v=20261104_v3">
 </head>
 <body>
   <header class="camp-header">
@@ -34,8 +34,24 @@
       <p style="color: var(--camp-text-secondary); margin-top: 6px; font-size: 1.05rem;">Rugged solar power banks, 1000-lumen lanterns, waterproof headlamps, mosquito repellers and campsite fans.</p>
     </div>
 
-    <!-- Category Filter & Sort Control Panel -->
-    <div class="catalog-control-panel">
+    <!-- Collapsible Filter Action Toolbar -->
+    <div class="filter-action-toolbar">
+      <button id="toggleFilterBtn" class="btn-toggle-filters" onclick="toggleFilterDrawer()">
+        <span>🔍</span>
+        <span id="toggleBtnText">Filter & Search Options</span>
+        <span id="activeFilterBadge" class="filter-count-badge" style="display: none;">0</span>
+        <span id="toggleChevron" class="toggle-chevron">▼</span>
+      </button>
+
+      <div class="toolbar-status">
+        Showing <span id="displayedCount" class="count-highlight">1–12</span> of <span id="totalCount" class="count-total">38</span> items in Outdoor Electronics & Power
+      </div>
+
+      <div id="toolbarActiveTags" class="toolbar-active-tags"></div>
+    </div>
+
+    <!-- Collapsible Filter & Search Drawer (Hidden by default, shown on click) -->
+    <div class="catalog-control-panel" id="catalogControlPanel">
       <!-- Search & Sort Row -->
       <div class="control-row-primary">
         <div class="search-box-wrapper">
@@ -102,12 +118,9 @@
         </button>
       </div>
 
-      <!-- Live Counter & Active Badges -->
-      <div class="active-filters-bar">
-        <div class="counter-display">
-          Showing <span id="displayedCount" class="count-highlight">38</span> of <span class="count-total">38</span> items in Outdoor Electronics & Power
-        </div>
-        <div class="active-badge-tags" id="activeBadgeTags"></div>
+      <!-- Done / Apply Button to close drawer -->
+      <div class="panel-close-bar">
+        <button class="btn-done-filters" onclick="closeFilterDrawer()">Done / Close Filters &rarr;</button>
       </div>
     </div>
 
@@ -119,7 +132,7 @@
       <button class="btn-camp-primary" onclick="resetAllFilters()">Reset Filters</button>
     </div>
 
-    <!-- Product Grid -->
+    <!-- Product Grid (12 items per page) -->
     <div class="product-grid" id="mainProductGrid">
       
     <div class="camp-card" 
@@ -1756,8 +1769,11 @@
       </div>
     </div>
     </div>
+
+    <!-- Pagination Navigation -->
+    <div id="paginationNav" class="pagination-nav"></div>
   </main>
 
-  <script src="../assets/catalog-filters.js?v=20261104_v2"></script>
+  <script src="../assets/catalog-filters.js?v=20261104_v3"></script>
 </body>
 </html>
