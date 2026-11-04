@@ -15,6 +15,16 @@
   let currentPage = 1;
   let isPanelOpen = false;
 
+    function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
   function initCatalogFilters() {
     const grid = document.getElementById('mainProductGrid') || document.querySelector('.product-grid');
     if (!grid) return;
@@ -409,7 +419,7 @@
       tags.push('<span class="filter-pill-tag" onclick="removeFilter(\'tier\')">' + tLabel + ' ✕</span>');
     }
     if (q.length > 0) {
-      tags.push('<span class="filter-pill-tag" onclick="removeFilter(\'search\')">Search: "' + q + '" ✕</span>');
+      tags.push('<span class="filter-pill-tag" onclick="removeFilter(\'search\')">Search: "' + escapeHtml(q) + '" ✕</span>');
     }
 
     const tagsHtml = tags.join('');
