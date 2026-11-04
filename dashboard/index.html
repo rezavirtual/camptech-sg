@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampTech SG | Sales & Marketing Intelligence Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #111827;
+      --card-border: #1f293d;
+      --card-hover: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --emerald: #10b981;
+      --emerald-glow: rgba(16, 185, 129, 0.15);
+      --blue: #38bdf8;
+      --amber: #f59e0b;
+      --rose: #f43f5e;
+      --purple: #a855f7;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding-bottom: 60px; min-height: 100vh; }
+
+    .top-notch {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.8) 100%);
+      backdrop-filter: blur(20px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid var(--card-border);
+      padding: 16px 24px;
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .brand-box h1 { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; }
+    .brand-box p { font-size: 0.85rem; color: var(--text-muted); margin-top: 2px; }
+
+    .tag-badge {
+      background: var(--emerald-glow);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      padding: 6px 14px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .container { max-width: 1400px; margin: 0 auto; padding: 32px 24px; }
+
+    .grid-kpi {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .kpi-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
+      position: relative;
+    }
+
+    .kpi-title { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; margin-bottom: 8px; }
+    .kpi-val { font-size: 1.8rem; font-weight: 800; color: #ffffff; }
+    .kpi-sub { font-size: 0.8rem; color: var(--emerald); margin-top: 4px; }
+
+    .dash-table-wrap {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow-x: auto;
+      margin-bottom: 32px;
+    }
+
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; }
+    th { background: #0f172a; padding: 14px 18px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; border-bottom: 1px solid var(--card-border); }
+    td { padding: 14px 18px; border-bottom: 1px solid var(--card-border); }
+    tr:hover { background: var(--card-hover); }
+
+    .product-cell { display: flex; align-items: center; gap: 12px; }
+    .asin-pill { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; background: rgba(255,255,255,0.08); padding: 2px 8px; border-radius: 4px; margin-top: 4px; color: var(--blue); }
+    .badge-gain { background: var(--emerald-glow); color: var(--emerald); font-weight: 700; padding: 3px 8px; border-radius: 6px; font-size: 0.75rem; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    /* PIN Gate Overlay */
+    #pinOverlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(9, 13, 22, 0.96);
+      backdrop-filter: blur(25px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pin-modal {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 36px 32px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+
+    .pin-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 8px; }
+    .pin-input {
+      width: 100%;
+      padding: 14px;
+      background: #0b0f19;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 1.4rem;
+      text-align: center;
+      letter-spacing: 0.25em;
+      margin: 18px 0;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .pin-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--emerald);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="pinOverlay">
+    <div class="pin-modal">
+      <div style="font-size: 2.5rem; margin-bottom: 12px;">🏕️</div>
+      <h2 class="pin-title">CampTech SG Intelligence</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted);">Enter 4-digit Management Access PIN</p>
+      <input type="password" id="pinInput" class="pin-input" maxlength="4" placeholder="••••" autofocus>
+      <button class="pin-btn" onclick="verifyPin()">Unlock Dashboard</button>
+      <p id="pinError" style="color: var(--rose); font-size: 0.8rem; margin-top: 12px; display: none;">Invalid PIN. Enter default 8795</p>
+    </div>
+  </div>
+
+  <div class="top-notch">
+    <div class="header-inner">
+      <div class="brand-box">
+        <h1>🏕️ CampTech SG — Outdoor & Camping Profit Dashboard</h1>
+        <p>Real-Time Conversion Tracking & Singapore Amazon.sg Profit Yields</p>
+      </div>
+      <div class="tag-badge">
+        <span>Tracking Tag:</span>
+        <strong>pettechsg-22</strong>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <div class="grid-kpi">
+      <div class="kpi-card">
+        <div class="kpi-title">Active Products</div>
+        <div class="kpi-val">52 Items</div>
+        <div class="kpi-sub">5 Dedicated Categories</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-title">Average Commission Rate</div>
+        <div class="kpi-val">10.0%</div>
+        <div class="kpi-sub">Amazon Sports & Outdoors</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-title">Average Comm / Sale</div>
+        <div class="kpi-val">S$10.10</div>
+        <div class="kpi-sub">Blended across all 52 SKUs</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-title">Catalog Retail Value</div>
+        <div class="kpi-val">S$5344.20</div>
+        <div class="kpi-sub">High-Ticket & Cookie Triggers</div>
+      </div>
+    </div>
+
+    <div class="dash-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Product & ASIN</th>
+            <th>Category</th>
+            <th>Price (SGD)</th>
+            <th>Est. Comm %</th>
+            <th>Comm / Sale</th>
+            <th>Conversion Trigger Role</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Coleman</strong> - Instant Pop-Up 4-Person Waterproof WeatherTec Camping Tent
+                  <div><span class="asin-pill">B09V7H83L1</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Tents, Shelters & Sleeping</td>
+            <td><strong>S$248.50</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$24.85</strong></td>
+            <td>Hero Anchor (High Ticket)</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Naturehike</strong> - Cloud-Up 2 Ultralight Double-Layer 20D Ripstop Backpacking Tent
+                  <div><span class="asin-pill">B08R5V44P7</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Tents, Shelters & Sleeping</td>
+            <td><strong>S$185.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$18.50</strong></td>
+            <td>Hero Anchor (High Ticket)</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Core Equipment</strong> - 6-Person Straight-Wall Cabin Tent with Gear Loft & Electrical Port
+                  <div><span class="asin-pill">B07H8K83G6</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Tents, Shelters & Sleeping</td>
+            <td><strong>S$349.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$34.90</strong></td>
+            <td>Hero Anchor (High Ticket)</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Wise Owl</strong> - Outfitters Ultralight Double Camping Hammock with Tree Straps
+                  <div><span class="asin-pill">B085CD7M1Z</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Tents, Shelters & Sleeping</td>
+            <td><strong>S$48.90</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$4.89</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Klymit</strong> - Static V Lightweight Inflatable Sleeping Pad with Ergonomic V-Chambers
+                  <div><span class="asin-pill">B091J3F9LW</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Tents, Shelters & Sleeping</td>
+            <td><strong>S$89.90</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$8.99</strong></td>
+            <td>Volume Trail Engine</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Unigear</strong> - Waterproof Ripstop Camping Tarp 3x3m Rain Fly & Hammock Shelter
+                  <div><span class="asin-pill">B0794F8FGG</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Tents, Shelters & Sleeping</td>
+            <td><strong>S$42.50</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$4.25</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Sleepingo</strong> - Double Sleeping Pad for 2 Person with Dual Attached Inflatable Pillows
+                  <div><span class="asin-pill">B08B5C7L8M</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Tents, Shelters & Sleeping</td>
+            <td><strong>S$79.90</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$7.99</strong></td>
+            <td>Volume Trail Engine</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>FE Active</strong> - Compact Folding Camp Cot Bed with Aerospace 7075 Aluminum Frame
+                  <div><span class="asin-pill">B07K6D9X1B</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Tents, Shelters & Sleeping</td>
+            <td><strong>S$125.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$12.50</strong></td>
+            <td>Volume Trail Engine</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>MalloMe</strong> - Camping Sleeping Bag Lightweight 3-Season Waterproof Envelope
+                  <div><span class="asin-pill">B0892R6F2T</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Tents, Shelters & Sleeping</td>
+            <td><strong>S$45.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$4.50</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Go Time Gear</strong> - Life Bivy Emergency Thermal Sleeping Bag with Survival Whistle
+                  <div><span class="asin-pill">B079DDK4G8</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Tents, Shelters & Sleeping</td>
+            <td><strong>S$28.90</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$2.89</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Coleman</strong> - Classic 2-Burner Propane Camping Stove with WindBlock Shields
+                  <div><span class="asin-pill">B00005OU6S</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Camp Kitchen & Outdoor Cooking</td>
+            <td><strong>S$165.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$16.50</strong></td>
+            <td>Hero Anchor (High Ticket)</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Bisgear</strong> - 16-Piece Hard-Anodized Aluminum Outdoor Cookware & Mess Kit
+                  <div><span class="asin-pill">B01AL77H4O</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Camp Kitchen & Outdoor Cooking</td>
+            <td><strong>S$49.90</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$4.99</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>TOAKS</strong> - Ultralight Titanium 750ml Camping Pot Mug with Lid & Bail Handle
+                  <div><span class="asin-pill">B079D8G3W8</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Camp Kitchen & Outdoor Cooking</td>
+            <td><strong>S$58.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$5.80</strong></td>
+            <td>Volume Trail Engine</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>YETI</strong> - Roadie 24 Hard Cooler with PermaFrost Insulation & HeftyHauler Handle
+                  <div><span class="asin-pill">B08R9P92YV</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Camp Kitchen & Outdoor Cooking</td>
+            <td><strong>S$385.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$38.50</strong></td>
+            <td>Hero Anchor (High Ticket)</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Sawyer</strong> - Mini Water Filtration System 0.1 Micron Absolute Hollow Fiber Membrane
+                  <div><span class="asin-pill">B0892B1H34</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Camp Kitchen & Outdoor Cooking</td>
+            <td><strong>S$39.90</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$3.99</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>GSI Outdoors</strong> - Glacier Stainless Steel 8-Cup Camp Coffee Percolator with Resin Knob
+                  <div><span class="asin-pill">B08B8T6H8N</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Camp Kitchen & Outdoor Cooking</td>
+            <td><strong>S$72.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$7.20</strong></td>
+            <td>Volume Trail Engine</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Camp Chef</strong> - All-in-One Portable Folding Camp Kitchen Workstation with Cupboards
+                  <div><span class="asin-pill">B07Z8G5V1R</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Camp Kitchen & Outdoor Cooking</td>
+            <td><strong>S$189.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$18.90</strong></td>
+            <td>Hero Anchor (High Ticket)</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>BioLite</strong> - CampStove 2+ Biomass Burning Thermoelectric Electricity Generating Stove
+                  <div><span class="asin-pill">B091V8K3D2</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Camp Kitchen & Outdoor Cooking</td>
+            <td><strong>S$269.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$26.90</strong></td>
+            <td>Hero Anchor (High Ticket)</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>UCO</strong> - 4-Piece Mess Kit with Locking Airtight Seal & Utility Spork
+                  <div><span class="asin-pill">B07H83L1P0</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Camp Kitchen & Outdoor Cooking</td>
+            <td><strong>S$26.50</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$2.65</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Sea to Summit</strong> - Kitchen Sink Collapsible 10L Camping Wash Basin with Carry Pouch
+                  <div><span class="asin-pill">B0892R9G4H</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Camp Kitchen & Outdoor Cooking</td>
+            <td><strong>S$36.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$3.60</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Jackery</strong> - Explorer 300 Portable Power Station 293Wh with Pure Sine Wave AC Outlets
+                  <div><span class="asin-pill">B08F21H3D2</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor Electronics & Power</td>
+            <td><strong>S$449.00</strong></td>
+            <td>8.0%</td>
+            <td><strong style="color: #10b981;">S$35.92</strong></td>
+            <td>Hero Anchor (High Ticket)</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Anker</strong> - PowerCore Solar 20,000mAh Rugged IP65 Waterproof Power Bank with Dual Flashlight
+                  <div><span class="asin-pill">B09V7H2P9L</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor Electronics & Power</td>
+            <td><strong>S$79.90</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$7.99</strong></td>
+            <td>Volume Trail Engine</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Black Diamond</strong> - Storm 500-R Rechargeable Waterproof 500 Lumen LED Headlamp
+                  <div><span class="asin-pill">B0892D1P8N</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor Electronics & Power</td>
+            <td><strong>S$95.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$9.50</strong></td>
+            <td>Volume Trail Engine</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Thermacell</strong> - MR300 Portable Mosquito Repeller with 15-Foot Zone of Defense
+                  <div><span class="asin-pill">B09W2F7T8M</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor Electronics & Power</td>
+            <td><strong>S$48.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$4.80</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>BigBlue</strong> - 28W Foldable Solar Charger with 3 USB Ports & SunPower Panels
+                  <div><span class="asin-pill">B08R9P1H3M</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor Electronics & Power</td>
+            <td><strong>S$99.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$9.90</strong></td>
+            <td>Volume Trail Engine</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>LUMENPRO</strong> - 1000 Lumen Rechargeable LED Camping Lantern with 4 Light Modes & Magnetic Base
+                  <div><span class="asin-pill">B09F9W1L4D</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor Electronics & Power</td>
+            <td><strong>S$38.50</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$3.85</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>AMACOOL</strong> - Portable 10,000mAh Rechargeable Campsite Fan with LED Ring Light
+                  <div><span class="asin-pill">B0892L7P4D</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor Electronics & Power</td>
+            <td><strong>S$49.90</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$4.99</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Midland</strong> - ER310 Emergency Crank Weather Radio with Ultrasonic Dog Whistle & 2600mAh Power
+                  <div><span class="asin-pill">B08B5C1H8M</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor Electronics & Power</td>
+            <td><strong>S$78.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$7.80</strong></td>
+            <td>Volume Trail Engine</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Motorola</strong> - T260 Talkabout Long Range Two-Way Radios (2-Pack) with Weather Channels
+                  <div><span class="asin-pill">B07H8K83G7</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor Electronics & Power</td>
+            <td><strong>S$98.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$9.80</strong></td>
+            <td>Volume Trail Engine</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>JBL</strong> - Clip 4 Portable Waterproof Bluetooth Speaker with Integrated Carabiner
+                  <div><span class="asin-pill">B0892R6F2U</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor Electronics & Power</td>
+            <td><strong>S$89.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$8.90</strong></td>
+            <td>Volume Trail Engine</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Apera Instruments</strong> - AI209 Value Series TDS & Conductivity Pocket Tester Pen
+                  <div><span class="asin-pill">B091V7H2P8</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor Electronics & Power</td>
+            <td><strong>S$42.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$4.20</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Leatherman</strong> - Wave Plus 18-in-1 Multi-Tool with Replaceable Wire Cutters & Leather Sheath
+                  <div><span class="asin-pill">B0002H49BC</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Gear, Tools & Campsite Furniture</td>
+            <td><strong>S$189.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$18.90</strong></td>
+            <td>Hero Anchor (High Ticket)</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Helinox</strong> - Chair One Ultralight Compact Collapsible Camping Chair with DAC Aluminum
+                  <div><span class="asin-pill">B08R9P92YQ</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Gear, Tools & Campsite Furniture</td>
+            <td><strong>S$175.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$17.50</strong></td>
+            <td>Hero Anchor (High Ticket)</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Coleman</strong> - Compact Roll-Top Aluminum Camping Table with Snap-Together Frame
+                  <div><span class="asin-pill">B079D8G3W9</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Gear, Tools & Campsite Furniture</td>
+            <td><strong>S$79.90</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$7.99</strong></td>
+            <td>Volume Trail Engine</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Osprey</strong> - Rook 50 Men's Ventilated Backpacking Rucksack with Integrated Raincover
+                  <div><span class="asin-pill">B0892R6F2V</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Gear, Tools & Campsite Furniture</td>
+            <td><strong>S$245.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$24.50</strong></td>
+            <td>Hero Anchor (High Ticket)</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>SOG</strong> - Entrenching Tool Folding Survival Shovel with Serrated Saw Edge & High Carbon Steel
+                  <div><span class="asin-pill">B07H83L1P1</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Gear, Tools & Campsite Furniture</td>
+            <td><strong>S$39.90</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$3.99</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>TITAN Survival</strong> - SurvivorCord 100ft Military 550 Paracord with Snare Wire, Fishing Line & Waxed Jute
+                  <div><span class="asin-pill">B0892D1P8O</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Gear, Tools & Campsite Furniture</td>
+            <td><strong>S$34.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$3.40</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Surviveware</strong> - Waterproof Premium First Aid Kit 100-Piece with MOLLE System & Labeled Compartments
+                  <div><span class="asin-pill">B09V7H83L2</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Gear, Tools & Campsite Furniture</td>
+            <td><strong>S$68.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$6.80</strong></td>
+            <td>Volume Trail Engine</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Timber Ridge</strong> - Folding Heavy-Duty All-Terrain Camping Utility Wagon Cart 150kg Capacity
+                  <div><span class="asin-pill">B079D8G3WA</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Gear, Tools & Campsite Furniture</td>
+            <td><strong>S$169.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$16.90</strong></td>
+            <td>Hero Anchor (High Ticket)</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>TrailBuddy</strong> - Aircraft-Grade 7075 Aluminum Trekking Poles with Quick Flip Locks (Pair)
+                  <div><span class="asin-pill">B0892R6F2W</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Gear, Tools & Campsite Furniture</td>
+            <td><strong>S$54.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$5.40</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Fiskars</strong> - X7 14-Inch Camp Hatchet with Forged Carbon Steel Blade & FiberComp Handle
+                  <div><span class="asin-pill">B07H83L1P2</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Gear, Tools & Campsite Furniture</td>
+            <td><strong>S$65.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$6.50</strong></td>
+            <td>Volume Trail Engine</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Earth Pak</strong> - Waterproof Dry Bag 20L with IPX8 Waterproof Phone Case & Shoulder Strap
+                  <div><span class="asin-pill">B0892D1P8P</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Gear, Tools & Campsite Furniture</td>
+            <td><strong>S$36.90</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$3.69</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Columbia</strong> - Men's Watertight II Waterproof Packable Rain Jacket with Omni-Tech
+                  <div><span class="asin-pill">B08R9P92YR</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor & Weatherproof Clothing</td>
+            <td><strong>S$125.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$12.50</strong></td>
+            <td>Volume Trail Engine</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Little Donkey Andy</strong> - Men's UPF 50+ UV Sun Protection Long Sleeve Quick-Dry Hiking Shirt
+                  <div><span class="asin-pill">B079D8G3WB</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor & Weatherproof Clothing</td>
+            <td><strong>S$42.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$4.20</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>BALEAF</strong> - Women's UPF 50+ Lightweight Sun Protection Hoodie Long Sleeve with Thumbholes
+                  <div><span class="asin-pill">B0892R6F2X</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor & Weatherproof Clothing</td>
+            <td><strong>S$38.50</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$3.85</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Columbia</strong> - Men's Silver Ridge Convertible Cargo Hiking Pants (Zip-Off to Shorts)
+                  <div><span class="asin-pill">B07H83L1P3</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor & Weatherproof Clothing</td>
+            <td><strong>S$89.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$8.90</strong></td>
+            <td>Volume Trail Engine</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Darn Tough</strong> - Hiker Micro Crew Midweight Merino Wool Cushion Socks (Men & Women)
+                  <div><span class="asin-pill">B0892D1P8Q</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor & Weatherproof Clothing</td>
+            <td><strong>S$38.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$3.80</strong></td>
+            <td>Volume Trail Engine</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Einskey</strong> - Sun Hat for Men & Women Waterproof Wide Brim Boonie with UPF 50+ & Breathable Mesh
+                  <div><span class="asin-pill">B09V7H83L3</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor & Weatherproof Clothing</td>
+            <td><strong>S$24.50</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$2.45</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Freetoo</strong> - Tactical Breathable Full Finger Outdoor Climbing & Trail Work Gloves
+                  <div><span class="asin-pill">B079D8G3WC</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor & Weatherproof Clothing</td>
+            <td><strong>S$29.90</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$2.99</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>KastKing</strong> - Hiwassee Polarized Sport Sunglasses with UV400 Protection & Grilamid Frame
+                  <div><span class="asin-pill">B0892R6F2Y</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor & Weatherproof Clothing</td>
+            <td><strong>S$38.00</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$3.80</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Mishansha</strong> - Quick-Dry Barefoot Water Shoes Trail Aqua Sneaker with Drainage Holes
+                  <div><span class="asin-pill">B07H83L1P4</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor & Weatherproof Clothing</td>
+            <td><strong>S$36.50</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$3.65</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div>
+                  <strong>Anyoo</strong> - Waterproof Lightweight Breathable Hooded Outdoor Rain Poncho with Grommets
+                  <div><span class="asin-pill">B0892D1P8R</span></div>
+                </div>
+              </div>
+            </td>
+            <td>Outdoor & Weatherproof Clothing</td>
+            <td><strong>S$27.90</strong></td>
+            <td>10.0%</td>
+            <td><strong style="color: #10b981;">S$2.79</strong></td>
+            <td>High-Velocity Cookie Trigger</td>
+            <td><span class="badge-gain">200 OK</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    function verifyPin() {
+      const pin = document.getElementById('pinInput').value;
+      if (pin === '8795') {
+        document.getElementById('pinOverlay').style.display = 'none';
+        sessionStorage.setItem('camptech_auth', 'unlocked');
+      } else {
+        document.getElementById('pinError').style.display = 'block';
+      }
+    }
+
+    document.getElementById('pinInput').addEventListener('keyup', function(e) {
+      if (e.key === 'Enter') verifyPin();
+    });
+
+    if (sessionStorage.getItem('camptech_auth') === 'unlocked') {
+      document.getElementById('pinOverlay').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
