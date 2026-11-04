@@ -705,6 +705,7 @@ footer.camp-footer {
   renderProductCard(p, isCategory = false) {
     const detailLink = isCategory ? `../products/${p.slug}.html` : `./products/${p.slug}.html`;
     const imgSrc = isCategory ? `../assets/products/${p.imageFile}` : `./assets/products/${p.imageFile}`;
+    const affUrl = p.affiliateUrl || `https://www.amazon.sg/dp/${p.asin}/?tag=pettechsg-22&linkCode=ogi&th=1&psc=1`;
 
     return `
     <div class="camp-card" data-category="${p.categorySlug}">
@@ -735,7 +736,7 @@ footer.camp-footer {
             ⭐ ${p.rating.toFixed(1)} <span style="color: var(--camp-text-tertiary); font-weight: normal;">(${p.reviewsCount.toLocaleString()})</span>
           </div>
         </div>
-        <a href="${p.affiliateUrl}" target="_blank" rel="nofollow noopener" class="btn-card-buy">
+        <a href="${affUrl}" target="_blank" rel="nofollow noopener" class="btn-card-buy">
           Buy on Amazon.sg &rarr;
         </a>
       </div>
