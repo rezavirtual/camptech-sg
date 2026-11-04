@@ -301,16 +301,108 @@ header.camp-header {
 }
 
 
+
 /* ==========================================================================
-   INTERACTIVE SORTING & FILTERING CONTROL PANEL
+   INTERACTIVE SORTING & FILTERING CONTROL PANEL (COLLAPSIBLE + PAGINATED)
    ========================================================================== */
-.catalog-control-panel {
+.filter-action-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 28px 0 16px;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btn-toggle-filters {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   background: #ffffff;
-  border: 1px solid var(--camp-border);
+  color: var(--camp-primary);
+  border: 1.5px solid var(--camp-primary);
+  padding: 10px 20px;
+  border-radius: 980px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(21, 128, 61, 0.08);
+}
+
+.btn-toggle-filters:hover, .btn-toggle-filters.btn-active {
+  background: #ecfdf5;
+  border-color: var(--camp-primary-hover);
+  color: var(--camp-primary-hover);
+  box-shadow: 0 4px 12px rgba(21, 128, 61, 0.15);
+}
+
+.filter-count-badge {
+  background: var(--camp-primary);
+  color: #ffffff;
+  font-size: 0.74rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 980px;
+  line-height: 1.2;
+}
+
+.toggle-chevron {
+  font-size: 0.72rem;
+  transition: transform 0.2s ease;
+}
+
+.toolbar-status {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--camp-text-secondary);
+}
+
+.toolbar-active-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Control Panel Drawer (Hidden by default, shown on click) */
+.catalog-control-panel {
+  display: none;
+  background: #ffffff;
+  border: 1.5px solid #bbf7d0;
   border-radius: 18px;
   padding: 22px 24px;
-  margin: 30px 0 25px;
-  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+  margin: 0 0 25px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.07);
+  animation: filterSlideDown 0.25s ease-out;
+}
+
+@keyframes filterSlideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.panel-close-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--camp-border-light);
+}
+
+.btn-done-filters {
+  background: var(--camp-primary);
+  color: #ffffff;
+  border: none;
+  padding: 9px 20px;
+  border-radius: 980px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-done-filters:hover {
+  background: var(--camp-primary-hover);
 }
 
 .control-row-primary {
@@ -526,10 +618,70 @@ header.camp-header {
   margin-bottom: 22px;
 }
 
+/* Pagination Navigation (12 items per page) */
+.pagination-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 45px 0 60px;
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  min-width: 42px;
+  height: 42px;
+  padding: 0 14px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid var(--camp-border);
+  color: var(--camp-text-primary);
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.page-btn:hover {
+  border-color: var(--camp-primary);
+  color: var(--camp-primary);
+  background: #f0fdf4;
+}
+
+.page-btn.active {
+  background: var(--camp-primary);
+  color: #ffffff;
+  border-color: var(--camp-primary);
+  box-shadow: 0 4px 12px rgba(21, 128, 61, 0.25);
+}
+
+.page-btn.disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+  border-color: var(--camp-border-light);
+}
+
+.page-arrow {
+  padding: 0 16px;
+  font-weight: 700;
+}
+
+.page-dots {
+  padding: 0 6px;
+  color: var(--camp-text-tertiary);
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
 @media (max-width: 768px) {
   .catalog-control-panel {
     padding: 16px;
-    margin: 20px 0 18px;
+    margin: 0 0 18px;
   }
   .control-row-primary {
     flex-direction: column;
@@ -565,6 +717,31 @@ header.camp-header {
     text-align: center;
     width: 100%;
     margin-left: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .filter-action-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .btn-toggle-filters {
+    justify-content: center;
+    width: 100%;
+  }
+  .toolbar-status {
+    text-align: center;
+  }
+  .page-btn {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 10px;
+    font-size: 0.84rem;
+    border-radius: 10px;
+  }
+  .page-arrow {
+    padding: 0 12px;
   }
 }
 
@@ -1045,7 +1222,7 @@ footer.camp-footer {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CampTech SG - Best Camping Equipment, Tents, Outdoor Electronics & Apparel Singapore (2026)</title>
   <meta name="description" content="Singapore's premier camping & outdoor adventure gear authority. Tested reviews of waterproof pop-up tents, camping stoves, solar power banks, multi-tools, and weatherproof clothing for East Coast Park, Pulau Ubin, and Malaysia trail expeditions.">
-  <link rel="stylesheet" href="./assets/styles.css?v=20261104_v2">
+  <link rel="stylesheet" href="./assets/styles.css?v=20261104_v3">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -1093,8 +1270,24 @@ footer.camp-footer {
     </section>
 
     <section class="container" id="productGrid">
-      <!-- Interactive Filtering & Sorting Control Panel -->
-      <div class="catalog-control-panel">
+      <!-- Collapsible Filter Action Toolbar (Visible by default) -->
+      <div class="filter-action-toolbar">
+        <button id="toggleFilterBtn" class="btn-toggle-filters" onclick="toggleFilterDrawer()">
+          <span>🔍</span>
+          <span id="toggleBtnText">Filter & Search Options</span>
+          <span id="activeFilterBadge" class="filter-count-badge" style="display: none;">0</span>
+          <span id="toggleChevron" class="toggle-chevron">▼</span>
+        </button>
+
+        <div class="toolbar-status">
+          Showing <span id="displayedCount" class="count-highlight">1–12</span> of <span id="totalCount" class="count-total">${products.length}</span> items
+        </div>
+
+        <div id="toolbarActiveTags" class="toolbar-active-tags"></div>
+      </div>
+
+      <!-- Collapsible Filter & Search Drawer (Hidden by default, shown on click) -->
+      <div class="catalog-control-panel" id="catalogControlPanel">
         <!-- Search & Sort Row -->
         <div class="control-row-primary">
           <div class="search-box-wrapper">
@@ -1168,12 +1361,9 @@ footer.camp-footer {
           </div>
         </div>
 
-        <!-- Live Counter & Active Badges -->
-        <div class="active-filters-bar">
-          <div class="counter-display">
-            Showing <span id="displayedCount" class="count-highlight">${products.length}</span> of <span class="count-total">${products.length}</span> camping products
-          </div>
-          <div class="active-badge-tags" id="activeBadgeTags"></div>
+        <!-- Done / Apply Button to close drawer -->
+        <div class="panel-close-bar">
+          <button class="btn-done-filters" onclick="closeFilterDrawer()">Done / Close Filters &rarr;</button>
         </div>
       </div>
 
@@ -1185,10 +1375,13 @@ footer.camp-footer {
         <button class="btn-camp-primary" onclick="resetAllFilters()">Reset All Filters</button>
       </div>
 
-      <!-- Product Grid -->
+      <!-- Product Grid (Paginated to 12 items per page) -->
       <div class="product-grid" id="mainProductGrid">
         ${cardsHtml}
       </div>
+
+      <!-- Pagination Navigation -->
+      <div id="paginationNav" class="pagination-nav"></div>
     </section>
 
     <!-- Singapore SEO Buyer Guides -->
@@ -1226,7 +1419,7 @@ footer.camp-footer {
     </div>
   </footer>
 
-  <script src="./assets/catalog-filters.js?v=20261104_v2"></script>
+  <script src="./assets/catalog-filters.js?v=20261104_v3"></script>
 </body>
 </html>`;
   }
@@ -1252,7 +1445,7 @@ footer.camp-footer {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${catMeta.name} Singapore - Best Camping Gear & Reviews (2026)</title>
   <meta name="description" content="${catMeta.desc}">
-  <link rel="stylesheet" href="../assets/styles.css?v=20261104_v2">
+  <link rel="stylesheet" href="../assets/styles.css?v=20261104_v3">
 </head>
 <body>
   <header class="camp-header">
@@ -1281,8 +1474,24 @@ footer.camp-footer {
       <p style="color: var(--camp-text-secondary); margin-top: 6px; font-size: 1.05rem;">${catMeta.desc}</p>
     </div>
 
-    <!-- Category Filter & Sort Control Panel -->
-    <div class="catalog-control-panel">
+    <!-- Collapsible Filter Action Toolbar -->
+    <div class="filter-action-toolbar">
+      <button id="toggleFilterBtn" class="btn-toggle-filters" onclick="toggleFilterDrawer()">
+        <span>🔍</span>
+        <span id="toggleBtnText">Filter & Search Options</span>
+        <span id="activeFilterBadge" class="filter-count-badge" style="display: none;">0</span>
+        <span id="toggleChevron" class="toggle-chevron">▼</span>
+      </button>
+
+      <div class="toolbar-status">
+        Showing <span id="displayedCount" class="count-highlight">1–12</span> of <span id="totalCount" class="count-total">${catProducts.length}</span> items in ${catMeta.name}
+      </div>
+
+      <div id="toolbarActiveTags" class="toolbar-active-tags"></div>
+    </div>
+
+    <!-- Collapsible Filter & Search Drawer (Hidden by default, shown on click) -->
+    <div class="catalog-control-panel" id="catalogControlPanel">
       <!-- Search & Sort Row -->
       <div class="control-row-primary">
         <div class="search-box-wrapper">
@@ -1344,12 +1553,9 @@ footer.camp-footer {
         </button>
       </div>
 
-      <!-- Live Counter & Active Badges -->
-      <div class="active-filters-bar">
-        <div class="counter-display">
-          Showing <span id="displayedCount" class="count-highlight">${catProducts.length}</span> of <span class="count-total">${catProducts.length}</span> items in ${catMeta.name}
-        </div>
-        <div class="active-badge-tags" id="activeBadgeTags"></div>
+      <!-- Done / Apply Button to close drawer -->
+      <div class="panel-close-bar">
+        <button class="btn-done-filters" onclick="closeFilterDrawer()">Done / Close Filters &rarr;</button>
       </div>
     </div>
 
@@ -1361,13 +1567,16 @@ footer.camp-footer {
       <button class="btn-camp-primary" onclick="resetAllFilters()">Reset Filters</button>
     </div>
 
-    <!-- Product Grid -->
+    <!-- Product Grid (12 items per page) -->
     <div class="product-grid" id="mainProductGrid">
       ${cardsHtml}
     </div>
+
+    <!-- Pagination Navigation -->
+    <div id="paginationNav" class="pagination-nav"></div>
   </main>
 
-  <script src="../assets/catalog-filters.js?v=20261104_v2"></script>
+  <script src="../assets/catalog-filters.js?v=20261104_v3"></script>
 </body>
 </html>`;
   }
