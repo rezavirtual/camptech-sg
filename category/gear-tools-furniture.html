@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gear, Tools & Furniture Singapore - Best Camping Gear & Reviews (2026)</title>
   <meta name="description" content="Multi-tools, ultralight folding chairs, roll-up aluminum tables, all-terrain beach wagons and first aid kits.">
-  <link rel="stylesheet" href="../assets/styles.css?v=20261104_v1">
+  <link rel="stylesheet" href="../assets/styles.css?v=20261104_v2">
 </head>
 <body>
   <header class="camp-header">
@@ -13,24 +13,123 @@
       <a href="../index.html" class="brand-mark">
         <span class="brand-logo-icon">🏕️</span>
         <span>CampTech SG</span>
+        <span class="sg-badge">Singapore Outdoor Authority</span>
       </a>
       <nav class="nav-menu">
-        <a href="../index.html" class="nav-link">All Gear (52)</a>
+        <a href="../index.html" class="nav-link">All Gear (200)</a>
         <a href="../index.html#guides" class="nav-link">Singapore Guides</a>
+        <a href="./tents-shelters-sleeping.html" class="nav-link">Tents & Sleeping</a>
+        <a href="./camp-kitchen-cooking.html" class="nav-link">Camp Kitchen</a>
+        <a href="./outdoor-electronics-power.html" class="nav-link">Electronics & Power</a>
+        <a href="./gear-tools-furniture.html" class="nav-link">Gear & Tools</a>
+        <a href="./outdoor-weatherproof-clothing.html" class="nav-link">Outdoor Apparel</a>
       </nav>
     </div>
   </header>
 
   <main class="container" style="padding-top: 40px;">
-    <div style="margin-bottom: 30px;">
-      <a href="../index.html" style="font-size: 0.85rem; color: var(--camp-primary); font-weight: 600;">&larr; Return to All Camping Gear</a>
-      <h1 style="font-size: 2.2rem; font-weight: 800; margin-top: 10px;">Gear, Tools & Furniture</h1>
+    <div style="margin-bottom: 25px;">
+      <a href="../index.html" style="font-size: 0.88rem; color: var(--camp-primary); font-weight: 600;">&larr; Return to All 200 Camping Items</a>
+      <h1 style="font-size: 2.3rem; font-weight: 800; margin-top: 10px; color: var(--camp-text-primary);">Gear, Tools & Furniture</h1>
       <p style="color: var(--camp-text-secondary); margin-top: 6px; font-size: 1.05rem;">Multi-tools, ultralight folding chairs, roll-up aluminum tables, all-terrain beach wagons and first aid kits.</p>
     </div>
 
-    <div class="product-grid">
+    <!-- Category Filter & Sort Control Panel -->
+    <div class="catalog-control-panel">
+      <!-- Search & Sort Row -->
+      <div class="control-row-primary">
+        <div class="search-box-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Search 56 items in Gear, Tools & Furniture...">
+          <button id="clearSearchBtn" class="clear-search-btn" onclick="clearSearch()" title="Clear Search" style="display: none;">✕</button>
+        </div>
+
+        <div class="sort-box-wrapper">
+          <label for="sortSelect" class="control-label">Sort by:</label>
+          <select id="sortSelect" class="camp-select">
+            <option value="featured">Featured / Best Sellers</option>
+            <option value="price-asc">Cost: Low to High (S$)</option>
+            <option value="price-desc">Cost: High to Low (S$)</option>
+            <option value="rating-desc">Highest Customer Rating (⭐ 5.0 → 4.5)</option>
+            <option value="reviews-desc">Most Reviewed (Popularity)</option>
+            <option value="name-asc">Product Name (A → Z)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Filter Dropdowns Row -->
+      <div class="control-row-secondary">
+        <!-- Brand Filter -->
+        <div class="filter-dropdown-group">
+          <label for="brandSelect" class="control-label">Brand:</label>
+          <select id="brandSelect" class="camp-select">
+            <option value="all">All Brands (56)</option>
+            <option value="Coleman">Coleman (20)</option>
+              <option value="The North Face">The North Face (15)</option>
+              <option value="Camping Moon">Camping Moon (11)</option>
+              <option value="Salomon">Salomon (10)</option>
+          </select>
+        </div>
+
+        <!-- Price Range Filter -->
+        <div class="filter-dropdown-group">
+          <label for="priceSelect" class="control-label">Cost / Price:</label>
+          <select id="priceSelect" class="camp-select">
+            <option value="all">Any Price</option>
+            <option value="under-50">Under S$50 (Budget)</option>
+            <option value="50-150">S$50 – S$150 (Mid-Range)</option>
+            <option value="150-300">S$150 – S$300 (Pro Gear)</option>
+            <option value="over-300">S$300+ (High-Ticket)</option>
+          </select>
+        </div>
+
+        <!-- Tier / Rating Filter -->
+        <div class="filter-dropdown-group">
+          <label for="tierSelect" class="control-label">Tier / Rating:</label>
+          <select id="tierSelect" class="camp-select">
+            <option value="all">All Items</option>
+            <option value="anchor">Top Performance</option>
+            <option value="trigger">Popular Picks</option>
+            <option value="rating-48">⭐ 4.8 Stars & Above</option>
+          </select>
+        </div>
+
+        <!-- Reset Button -->
+        <button id="resetFiltersBtn" class="btn-reset-filters" onclick="resetAllFilters()" style="display: none;">
+          Reset Filters ✕
+        </button>
+      </div>
+
+      <!-- Live Counter & Active Badges -->
+      <div class="active-filters-bar">
+        <div class="counter-display">
+          Showing <span id="displayedCount" class="count-highlight">56</span> of <span class="count-total">56</span> items in Gear, Tools & Furniture
+        </div>
+        <div class="active-badge-tags" id="activeBadgeTags"></div>
+      </div>
+    </div>
+
+    <!-- No Results State -->
+    <div id="noResultsState" class="no-results-state" style="display: none;">
+      <div class="no-results-icon">🔍</div>
+      <h3>No matching items found in this category</h3>
+      <p>Try clearing your keyword, adjusting your price range, or clearing the brand filter.</p>
+      <button class="btn-camp-primary" onclick="resetAllFilters()">Reset Filters</button>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="product-grid" id="mainProductGrid">
       
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Camping Moon" 
+         data-price="52.05" 
+         data-rating="5" 
+         data-reviews="150" 
+         data-tier="trigger" 
+         data-title="camping moon"
+         data-search="camping moon camping moon gear, tools & campsite furniture camping moon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the camping moon camping moon provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="0">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Camping Moon</span>
         <span class="card-tier-pill tier-trigger">
@@ -64,7 +163,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Camping Moon" 
+         data-price="100.65" 
+         data-rating="5" 
+         data-reviews="150" 
+         data-tier="trigger" 
+         data-title="camping moon"
+         data-search="camping moon camping moon gear, tools & campsite furniture camping moon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the camping moon camping moon provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="1">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Camping Moon</span>
         <span class="card-tier-pill tier-trigger">
@@ -98,7 +206,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Camping Moon" 
+         data-price="103.55" 
+         data-rating="5" 
+         data-reviews="150" 
+         data-tier="trigger" 
+         data-title="camping moon moon lence"
+         data-search="camping moon camping moon moon lence gear, tools & campsite furniture camping moon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the camping moon camping moon moon lence provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="2">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Camping Moon</span>
         <span class="card-tier-pill tier-trigger">
@@ -132,7 +249,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Camping Moon" 
+         data-price="97.58" 
+         data-rating="5" 
+         data-reviews="150" 
+         data-tier="trigger" 
+         data-title="camping moon oversized camping chair 500lbs heavy duty"
+         data-search="camping moon camping moon oversized camping chair 500lbs heavy duty gear, tools & campsite furniture camping moon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the camping moon camping moon oversized camping chair 500lbs heavy duty provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="3">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Camping Moon</span>
         <span class="card-tier-pill tier-trigger">
@@ -166,7 +292,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Camping Moon" 
+         data-price="140.75" 
+         data-rating="5" 
+         data-reviews="150" 
+         data-tier="trigger" 
+         data-title="camping moon moon lence"
+         data-search="camping moon camping moon moon lence gear, tools & campsite furniture camping moon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the camping moon camping moon moon lence provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="4">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Camping Moon</span>
         <span class="card-tier-pill tier-trigger">
@@ -200,7 +335,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Camping Moon" 
+         data-price="68.46" 
+         data-rating="4.9" 
+         data-reviews="150" 
+         data-tier="trigger" 
+         data-title="camping moon moon lence"
+         data-search="camping moon camping moon moon lence gear, tools & campsite furniture camping moon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the camping moon camping moon moon lence provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="5">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Camping Moon</span>
         <span class="card-tier-pill tier-trigger">
@@ -234,7 +378,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Camping Moon" 
+         data-price="117.29" 
+         data-rating="4.8" 
+         data-reviews="150" 
+         data-tier="trigger" 
+         data-title="camping moon"
+         data-search="camping moon camping moon gear, tools & campsite furniture camping moon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the camping moon camping moon provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="6">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Camping Moon</span>
         <span class="card-tier-pill tier-trigger">
@@ -268,7 +421,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Camping Moon" 
+         data-price="104.99" 
+         data-rating="4.8" 
+         data-reviews="150" 
+         data-tier="trigger" 
+         data-title="camping moon"
+         data-search="camping moon camping moon gear, tools & campsite furniture camping moon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the camping moon camping moon provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="7">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Camping Moon</span>
         <span class="card-tier-pill tier-trigger">
@@ -302,7 +464,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Camping Moon" 
+         data-price="64.1" 
+         data-rating="4.8" 
+         data-reviews="150" 
+         data-tier="trigger" 
+         data-title="camping moon"
+         data-search="camping moon camping moon gear, tools & campsite furniture camping moon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the camping moon camping moon provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="8">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Camping Moon</span>
         <span class="card-tier-pill tier-trigger">
@@ -336,7 +507,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Camping Moon" 
+         data-price="59.06" 
+         data-rating="4.8" 
+         data-reviews="150" 
+         data-tier="trigger" 
+         data-title="camping moon moon lence"
+         data-search="camping moon camping moon moon lence gear, tools & campsite furniture camping moon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the camping moon camping moon moon lence provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="9">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Camping Moon</span>
         <span class="card-tier-pill tier-trigger">
@@ -370,7 +550,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Camping Moon" 
+         data-price="100.22" 
+         data-rating="4.8" 
+         data-reviews="150" 
+         data-tier="trigger" 
+         data-title="camping moon high back moon camping chairs portable large heavy duty folding saucer lounge chair with side storage pocket head padded"
+         data-search="camping moon camping moon high back moon camping chairs portable large heavy duty folding saucer lounge chair with side storage pocket head padded gear, tools & campsite furniture camping moon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the camping moon camping moon high back moon camping chairs portable large heavy duty folding saucer lounge chair with side storage pocket head padded provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="10">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Camping Moon</span>
         <span class="card-tier-pill tier-trigger">
@@ -404,7 +593,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Coleman" 
+         data-price="63.65" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="coleman columbia coleman walker square backpack heather"
+         data-search="coleman coleman columbia coleman walker square backpack heather gear, tools & campsite furniture coleman authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the coleman coleman columbia coleman walker square backpack heather provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="11">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Coleman</span>
         <span class="card-tier-pill tier-trigger">
@@ -438,7 +636,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Coleman" 
+         data-price="102.25" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="coleman the north face coleman eria backpack  unisex"
+         data-search="coleman coleman the north face coleman eria backpack  unisex gear, tools & campsite furniture coleman authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the coleman coleman the north face coleman eria backpack  unisex provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="12">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Coleman</span>
         <span class="card-tier-pill tier-trigger">
@@ -472,7 +679,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Coleman" 
+         data-price="107.52" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="coleman the north face coleman outbiz travel backpack"
+         data-search="coleman coleman the north face coleman outbiz travel backpack gear, tools & campsite furniture coleman authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the coleman coleman the north face coleman outbiz travel backpack provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="13">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Coleman</span>
         <span class="card-tier-pill tier-trigger">
@@ -506,7 +722,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Coleman" 
+         data-price="84.25" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="coleman the north face coleman outbiz active backpack black"
+         data-search="coleman coleman the north face coleman outbiz active backpack black gear, tools & campsite furniture coleman authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the coleman coleman the north face coleman outbiz active backpack black provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="14">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Coleman</span>
         <span class="card-tier-pill tier-trigger">
@@ -540,7 +765,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Coleman" 
+         data-price="134.12" 
+         data-rating="4.6" 
+         data-reviews="180" 
+         data-tier="trigger" 
+         data-title="coleman loyeahcamp"
+         data-search="coleman coleman loyeahcamp gear, tools & campsite furniture coleman authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the coleman coleman loyeahcamp provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="15">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Coleman</span>
         <span class="card-tier-pill tier-trigger">
@@ -574,7 +808,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Coleman" 
+         data-price="158.68" 
+         data-rating="4.6" 
+         data-reviews="180" 
+         data-tier="anchor" 
+         data-title="coleman naturehike"
+         data-search="coleman coleman naturehike gear, tools & campsite furniture coleman authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the coleman coleman naturehike provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="16">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Coleman</span>
         <span class="card-tier-pill tier-anchor">
@@ -608,7 +851,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Coleman" 
+         data-price="135.78" 
+         data-rating="4.6" 
+         data-reviews="180" 
+         data-tier="trigger" 
+         data-title="coleman camel crown"
+         data-search="coleman coleman camel crown gear, tools & campsite furniture coleman authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the coleman coleman camel crown provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="17">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Coleman</span>
         <span class="card-tier-pill tier-trigger">
@@ -642,7 +894,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Coleman" 
+         data-price="224.61" 
+         data-rating="4.6" 
+         data-reviews="180" 
+         data-tier="anchor" 
+         data-title="coleman therm-a-rest"
+         data-search="coleman coleman therm-a-rest gear, tools & campsite furniture coleman authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the coleman coleman therm-a-rest provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="18">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Coleman</span>
         <span class="card-tier-pill tier-anchor">
@@ -676,7 +937,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Coleman" 
+         data-price="126.31" 
+         data-rating="4.6" 
+         data-reviews="180" 
+         data-tier="trigger" 
+         data-title="coleman therm-a-rest"
+         data-search="coleman coleman therm-a-rest gear, tools & campsite furniture coleman authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the coleman coleman therm-a-rest provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="19">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Coleman</span>
         <span class="card-tier-pill tier-trigger">
@@ -710,7 +980,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Coleman" 
+         data-price="360.94" 
+         data-rating="4.6" 
+         data-reviews="180" 
+         data-tier="anchor" 
+         data-title="coleman therm-a-rest"
+         data-search="coleman coleman therm-a-rest gear, tools & campsite furniture coleman authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the coleman coleman therm-a-rest provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="20">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Coleman</span>
         <span class="card-tier-pill tier-anchor">
@@ -744,7 +1023,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Coleman" 
+         data-price="265.22" 
+         data-rating="4.6" 
+         data-reviews="180" 
+         data-tier="anchor" 
+         data-title="coleman therm-a-rest"
+         data-search="coleman coleman therm-a-rest gear, tools & campsite furniture coleman authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the coleman coleman therm-a-rest provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="21">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Coleman</span>
         <span class="card-tier-pill tier-anchor">
@@ -778,7 +1066,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Coleman" 
+         data-price="238.73" 
+         data-rating="4.6" 
+         data-reviews="180" 
+         data-tier="anchor" 
+         data-title="coleman nemo equipment"
+         data-search="coleman coleman nemo equipment gear, tools & campsite furniture coleman authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the coleman coleman nemo equipment provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="22">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Coleman</span>
         <span class="card-tier-pill tier-anchor">
@@ -812,7 +1109,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Coleman" 
+         data-price="360.98" 
+         data-rating="4.5" 
+         data-reviews="180" 
+         data-tier="anchor" 
+         data-title="coleman dod(ディーオーディー)"
+         data-search="coleman coleman dod(ディーオーディー) gear, tools & campsite furniture coleman authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the coleman coleman dod(ディーオーディー) provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="23">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Coleman</span>
         <span class="card-tier-pill tier-anchor">
@@ -846,7 +1152,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Coleman" 
+         data-price="165.62" 
+         data-rating="4.5" 
+         data-reviews="180" 
+         data-tier="anchor" 
+         data-title="coleman therm-a-rest"
+         data-search="coleman coleman therm-a-rest gear, tools & campsite furniture coleman authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the coleman coleman therm-a-rest provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="24">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Coleman</span>
         <span class="card-tier-pill tier-anchor">
@@ -880,7 +1195,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Coleman" 
+         data-price="217.2" 
+         data-rating="4.5" 
+         data-reviews="180" 
+         data-tier="anchor" 
+         data-title="coleman lost horizon"
+         data-search="coleman coleman lost horizon gear, tools & campsite furniture coleman authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the coleman coleman lost horizon provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="25">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Coleman</span>
         <span class="card-tier-pill tier-anchor">
@@ -914,7 +1238,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Coleman" 
+         data-price="124" 
+         data-rating="4.5" 
+         data-reviews="180" 
+         data-tier="trigger" 
+         data-title="coleman naturehike"
+         data-search="coleman coleman naturehike gear, tools & campsite furniture coleman authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the coleman coleman naturehike provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="26">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Coleman</span>
         <span class="card-tier-pill tier-trigger">
@@ -948,7 +1281,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Coleman" 
+         data-price="224.33" 
+         data-rating="4.5" 
+         data-reviews="180" 
+         data-tier="anchor" 
+         data-title="coleman therm-a-rest"
+         data-search="coleman coleman therm-a-rest gear, tools & campsite furniture coleman authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the coleman coleman therm-a-rest provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="27">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Coleman</span>
         <span class="card-tier-pill tier-anchor">
@@ -982,7 +1324,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Coleman" 
+         data-price="137.4" 
+         data-rating="4.5" 
+         data-reviews="180" 
+         data-tier="trigger" 
+         data-title="coleman therm-a-rest"
+         data-search="coleman coleman therm-a-rest gear, tools & campsite furniture coleman authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the coleman coleman therm-a-rest provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="28">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Coleman</span>
         <span class="card-tier-pill tier-trigger">
@@ -1016,7 +1367,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Coleman" 
+         data-price="79.92" 
+         data-rating="4.5" 
+         data-reviews="180" 
+         data-tier="trigger" 
+         data-title="coleman onetigris camping"
+         data-search="coleman coleman onetigris camping gear, tools & campsite furniture coleman authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the coleman coleman onetigris camping provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="29">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Coleman</span>
         <span class="card-tier-pill tier-trigger">
@@ -1050,7 +1410,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Coleman" 
+         data-price="109.72" 
+         data-rating="4.5" 
+         data-reviews="180" 
+         data-tier="trigger" 
+         data-title="coleman コールマン(coleman) スクリーンシェード テントピクニック キャンプ"
+         data-search="coleman coleman コールマン(coleman) スクリーンシェード テントピクニック キャンプ gear, tools & campsite furniture coleman authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the coleman coleman コールマン(coleman) スクリーンシェード テントピクニック キャンプ provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="30">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Coleman</span>
         <span class="card-tier-pill tier-trigger">
@@ -1084,7 +1453,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="The North Face" 
+         data-price="102.35" 
+         data-rating="5" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="the north face outdoor products backpack capacity variable"
+         data-search="the north face the north face outdoor products backpack capacity variable gear, tools & campsite furniture the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face outdoor products backpack capacity variable provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="31">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-trigger">
@@ -1118,7 +1496,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="The North Face" 
+         data-price="84.21" 
+         data-rating="5" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="the north face outdoor products backpack one size"
+         data-search="the north face the north face outdoor products backpack one size gear, tools & campsite furniture the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face outdoor products backpack one size provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="32">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-trigger">
@@ -1152,7 +1539,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="The North Face" 
+         data-price="54.42" 
+         data-rating="5" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="the north face outdoor products classic backpack capacity"
+         data-search="the north face the north face outdoor products classic backpack capacity gear, tools & campsite furniture the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face outdoor products classic backpack capacity provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="33">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-trigger">
@@ -1186,7 +1582,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="The North Face" 
+         data-price="49.27" 
+         data-rating="5" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="the north face outdoor products classic backpack capacity"
+         data-search="the north face the north face outdoor products classic backpack capacity gear, tools & campsite furniture the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face outdoor products classic backpack capacity provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="34">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-trigger">
@@ -1220,7 +1625,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="The North Face" 
+         data-price="82.15" 
+         data-rating="5" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="the north face products backpack capacity variable variable"
+         data-search="the north face the north face products backpack capacity variable variable gear, tools & campsite furniture the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face products backpack capacity variable variable provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="35">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-trigger">
@@ -1254,7 +1668,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="The North Face" 
+         data-price="219.41" 
+         data-rating="5" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="the north face north face base camp duffel"
+         data-search="the north face the north face north face base camp duffel gear, tools & campsite furniture the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face north face base camp duffel provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="36">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-anchor">
@@ -1288,7 +1711,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="The North Face" 
+         data-price="175.98" 
+         data-rating="4.8" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="the north face jester backpack"
+         data-search="the north face the north face jester backpack gear, tools & campsite furniture the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face jester backpack provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="37">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-anchor">
@@ -1322,7 +1754,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="The North Face" 
+         data-price="182.26" 
+         data-rating="4.8" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="the north face north face borealis classic backpack"
+         data-search="the north face the north face north face borealis classic backpack gear, tools & campsite furniture the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face north face borealis classic backpack provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="38">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-anchor">
@@ -1356,7 +1797,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="The North Face" 
+         data-price="97.19" 
+         data-rating="4.8" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="the north face under armour unisex adult hustle backpack"
+         data-search="the north face the north face under armour unisex adult hustle backpack gear, tools & campsite furniture the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face under armour unisex adult hustle backpack provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="39">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-trigger">
@@ -1390,7 +1840,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="The North Face" 
+         data-price="243.61" 
+         data-rating="4.8" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="the north face north face base large duffel"
+         data-search="the north face the north face north face base large duffel gear, tools & campsite furniture the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face north face base large duffel provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="40">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-anchor">
@@ -1424,7 +1883,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="The North Face" 
+         data-price="207.04" 
+         data-rating="4.8" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="the north face north face nf0a52sas9w duffel evergreen"
+         data-search="the north face the north face north face nf0a52sas9w duffel evergreen gear, tools & campsite furniture the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face north face nf0a52sas9w duffel evergreen provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="41">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-anchor">
@@ -1458,7 +1926,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="The North Face" 
+         data-price="115.15" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="the north face north face everyday backpack black npf"
+         data-search="the north face the north face north face everyday backpack black npf gear, tools & campsite furniture the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face north face everyday backpack black npf provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="42">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-trigger">
@@ -1492,7 +1969,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="The North Face" 
+         data-price="181.59" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="the north face north borealis backpack  backpack"
+         data-search="the north face the north face north borealis backpack  backpack gear, tools & campsite furniture the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face north borealis backpack  backpack provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="43">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-anchor">
@@ -1526,7 +2012,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Salomon" 
+         data-price="62.95" 
+         data-rating="4.8" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="salomon hydration backpack lightweight adjustable breathable"
+         data-search="salomon salomon hydration backpack lightweight adjustable breathable gear, tools & campsite furniture salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon hydration backpack lightweight adjustable breathable provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="44">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-trigger">
@@ -1560,7 +2055,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Salomon" 
+         data-price="235.37" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="salomon osprey velocity backpack charcoal tumbleweed"
+         data-search="salomon salomon osprey velocity backpack charcoal tumbleweed gear, tools & campsite furniture salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon osprey velocity backpack charcoal tumbleweed provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="45">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-anchor">
@@ -1594,7 +2098,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Salomon" 
+         data-price="112.02" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="salomon deuter speed unisex adult backpack"
+         data-search="salomon salomon deuter speed unisex adult backpack gear, tools & campsite furniture salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon deuter speed unisex adult backpack provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="46">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-trigger">
@@ -1628,7 +2141,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Salomon" 
+         data-price="53" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="salomon azarxis hydration running backpack marathon"
+         data-search="salomon salomon azarxis hydration running backpack marathon gear, tools & campsite furniture salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon azarxis hydration running backpack marathon provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="47">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-trigger">
@@ -1662,7 +2184,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Salomon" 
+         data-price="233.8" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="salomon mountain climbing backpack charcoal charcoal"
+         data-search="salomon salomon mountain climbing backpack charcoal charcoal gear, tools & campsite furniture salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon mountain climbing backpack charcoal charcoal provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="48">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-anchor">
@@ -1696,7 +2227,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Salomon" 
+         data-price="41.48" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="salomon lightweight cycling hydration backpack capacity"
+         data-search="salomon salomon lightweight cycling hydration backpack capacity gear, tools & campsite furniture salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon lightweight cycling hydration backpack capacity provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="49">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-trigger">
@@ -1730,7 +2270,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Salomon" 
+         data-price="115.41" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="salomon stream trail waterproof backpack size"
+         data-search="salomon salomon stream trail waterproof backpack size gear, tools & campsite furniture salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon stream trail waterproof backpack size provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="50">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-trigger">
@@ -1764,7 +2313,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Salomon" 
+         data-price="99.73" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="salomon rock experience running unisex backpack"
+         data-search="salomon salomon rock experience running unisex backpack gear, tools & campsite furniture salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon rock experience running unisex backpack provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="51">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-trigger">
@@ -1798,7 +2356,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Salomon" 
+         data-price="188.74" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="salomon evoc unisex stage backpack pack"
+         data-search="salomon salomon evoc unisex stage backpack pack gear, tools & campsite furniture salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon evoc unisex stage backpack pack provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="52">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-anchor">
@@ -1832,7 +2399,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="Salomon" 
+         data-price="211.14" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="salomon deuter 3303226 freerider medium backpack"
+         data-search="salomon salomon deuter 3303226 freerider medium backpack gear, tools & campsite furniture salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon deuter 3303226 freerider medium backpack provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="53">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-anchor">
@@ -1866,7 +2442,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="The North Face" 
+         data-price="142.08" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="the north face north face unisex jester backpack"
+         data-search="the north face the north face north face unisex jester backpack gear, tools & campsite furniture the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face north face unisex jester backpack provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="54">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-trigger">
@@ -1900,7 +2485,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="gear-tools-furniture">
+    <div class="camp-card" 
+         data-category="gear-tools-furniture" 
+         data-brand="The North Face" 
+         data-price="106.98" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="the north face tomtoc backpack approved water resistant essentials"
+         data-search="the north face the north face tomtoc backpack approved water resistant essentials gear, tools & campsite furniture the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face tomtoc backpack approved water resistant essentials provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="55">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-trigger">
@@ -1935,5 +2529,7 @@
     </div>
     </div>
   </main>
+
+  <script src="../assets/catalog-filters.js?v=20261104_v2"></script>
 </body>
 </html>

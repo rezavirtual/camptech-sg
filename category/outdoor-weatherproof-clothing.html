@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weatherproof Clothing Singapore - Best Camping Gear & Reviews (2026)</title>
   <meta name="description" content="UPF 50+ sun protection shirts, packable rain jackets, anti-blister Merino wool socks and convertible hiking pants.">
-  <link rel="stylesheet" href="../assets/styles.css?v=20261104_v1">
+  <link rel="stylesheet" href="../assets/styles.css?v=20261104_v2">
 </head>
 <body>
   <header class="camp-header">
@@ -13,24 +13,122 @@
       <a href="../index.html" class="brand-mark">
         <span class="brand-logo-icon">🏕️</span>
         <span>CampTech SG</span>
+        <span class="sg-badge">Singapore Outdoor Authority</span>
       </a>
       <nav class="nav-menu">
-        <a href="../index.html" class="nav-link">All Gear (52)</a>
+        <a href="../index.html" class="nav-link">All Gear (200)</a>
         <a href="../index.html#guides" class="nav-link">Singapore Guides</a>
+        <a href="./tents-shelters-sleeping.html" class="nav-link">Tents & Sleeping</a>
+        <a href="./camp-kitchen-cooking.html" class="nav-link">Camp Kitchen</a>
+        <a href="./outdoor-electronics-power.html" class="nav-link">Electronics & Power</a>
+        <a href="./gear-tools-furniture.html" class="nav-link">Gear & Tools</a>
+        <a href="./outdoor-weatherproof-clothing.html" class="nav-link">Outdoor Apparel</a>
       </nav>
     </div>
   </header>
 
   <main class="container" style="padding-top: 40px;">
-    <div style="margin-bottom: 30px;">
-      <a href="../index.html" style="font-size: 0.85rem; color: var(--camp-primary); font-weight: 600;">&larr; Return to All Camping Gear</a>
-      <h1 style="font-size: 2.2rem; font-weight: 800; margin-top: 10px;">Weatherproof Clothing</h1>
+    <div style="margin-bottom: 25px;">
+      <a href="../index.html" style="font-size: 0.88rem; color: var(--camp-primary); font-weight: 600;">&larr; Return to All 200 Camping Items</a>
+      <h1 style="font-size: 2.3rem; font-weight: 800; margin-top: 10px; color: var(--camp-text-primary);">Weatherproof Clothing</h1>
       <p style="color: var(--camp-text-secondary); margin-top: 6px; font-size: 1.05rem;">UPF 50+ sun protection shirts, packable rain jackets, anti-blister Merino wool socks and convertible hiking pants.</p>
     </div>
 
-    <div class="product-grid">
+    <!-- Category Filter & Sort Control Panel -->
+    <div class="catalog-control-panel">
+      <!-- Search & Sort Row -->
+      <div class="control-row-primary">
+        <div class="search-box-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Search 79 items in Weatherproof Clothing...">
+          <button id="clearSearchBtn" class="clear-search-btn" onclick="clearSearch()" title="Clear Search" style="display: none;">✕</button>
+        </div>
+
+        <div class="sort-box-wrapper">
+          <label for="sortSelect" class="control-label">Sort by:</label>
+          <select id="sortSelect" class="camp-select">
+            <option value="featured">Featured / Best Sellers</option>
+            <option value="price-asc">Cost: Low to High (S$)</option>
+            <option value="price-desc">Cost: High to Low (S$)</option>
+            <option value="rating-desc">Highest Customer Rating (⭐ 5.0 → 4.5)</option>
+            <option value="reviews-desc">Most Reviewed (Popularity)</option>
+            <option value="name-asc">Product Name (A → Z)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Filter Dropdowns Row -->
+      <div class="control-row-secondary">
+        <!-- Brand Filter -->
+        <div class="filter-dropdown-group">
+          <label for="brandSelect" class="control-label">Brand:</label>
+          <select id="brandSelect" class="camp-select">
+            <option value="all">All Brands (79)</option>
+            <option value="Columbia">Columbia (47)</option>
+              <option value="The North Face">The North Face (17)</option>
+              <option value="Salomon">Salomon (15)</option>
+          </select>
+        </div>
+
+        <!-- Price Range Filter -->
+        <div class="filter-dropdown-group">
+          <label for="priceSelect" class="control-label">Cost / Price:</label>
+          <select id="priceSelect" class="camp-select">
+            <option value="all">Any Price</option>
+            <option value="under-50">Under S$50 (Budget)</option>
+            <option value="50-150">S$50 – S$150 (Mid-Range)</option>
+            <option value="150-300">S$150 – S$300 (Pro Gear)</option>
+            <option value="over-300">S$300+ (High-Ticket)</option>
+          </select>
+        </div>
+
+        <!-- Tier / Rating Filter -->
+        <div class="filter-dropdown-group">
+          <label for="tierSelect" class="control-label">Tier / Rating:</label>
+          <select id="tierSelect" class="camp-select">
+            <option value="all">All Items</option>
+            <option value="anchor">Top Performance</option>
+            <option value="trigger">Popular Picks</option>
+            <option value="rating-48">⭐ 4.8 Stars & Above</option>
+          </select>
+        </div>
+
+        <!-- Reset Button -->
+        <button id="resetFiltersBtn" class="btn-reset-filters" onclick="resetAllFilters()" style="display: none;">
+          Reset Filters ✕
+        </button>
+      </div>
+
+      <!-- Live Counter & Active Badges -->
+      <div class="active-filters-bar">
+        <div class="counter-display">
+          Showing <span id="displayedCount" class="count-highlight">79</span> of <span class="count-total">79</span> items in Weatherproof Clothing
+        </div>
+        <div class="active-badge-tags" id="activeBadgeTags"></div>
+      </div>
+    </div>
+
+    <!-- No Results State -->
+    <div id="noResultsState" class="no-results-state" style="display: none;">
+      <div class="no-results-icon">🔍</div>
+      <h3>No matching items found in this category</h3>
+      <p>Try clearing your keyword, adjusting your price range, or clearing the brand filter.</p>
+      <button class="btn-camp-primary" onclick="resetAllFilters()">Reset Filters</button>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="product-grid" id="mainProductGrid">
       
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="87.96" 
+         data-rating="5" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia silver ridge elite titanium"
+         data-search="columbia columbia silver ridge elite titanium outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia silver ridge elite titanium provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="0">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -64,7 +162,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="159.51" 
+         data-rating="5" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="columbia  newton trekking hiking"
+         data-search="columbia columbia  newton trekking hiking outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia  newton trekking hiking provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="1">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-anchor">
@@ -98,7 +205,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="154.47" 
+         data-rating="5" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="columbia waterproof traction comfort available"
+         data-search="columbia columbia waterproof traction comfort available outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia waterproof traction comfort available provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="2">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-anchor">
@@ -132,7 +248,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="84.26" 
+         data-rating="5" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia breathable lightweight extended available"
+         data-search="columbia columbia breathable lightweight extended available outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia breathable lightweight extended available provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="3">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -166,7 +291,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="60.02" 
+         data-rating="5" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia breathable lightweight extended available"
+         data-search="columbia columbia breathable lightweight extended available outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia breathable lightweight extended available provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="4">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -200,7 +334,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="114.67" 
+         data-rating="4.9" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia  hikebound waterproof jacket"
+         data-search="columbia columbia  hikebound waterproof jacket outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia  hikebound waterproof jacket provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="5">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -234,7 +377,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="84.24" 
+         data-rating="4.8" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia rapid rivers cargo black"
+         data-search="columbia columbia rapid rivers cargo black outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia rapid rivers cargo black provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="6">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -268,7 +420,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="132.18" 
+         data-rating="4.8" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia newton waterproof omni heat hiking"
+         data-search="columbia columbia newton waterproof omni heat hiking outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia newton waterproof omni heat hiking provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="7">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -302,7 +463,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="70.14" 
+         data-rating="4.8" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia glennaker jacket phoenix medium"
+         data-search="columbia columbia glennaker jacket phoenix medium outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia glennaker jacket phoenix medium provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="8">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -336,7 +506,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="128.76" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia  newton waterproof mountain"
+         data-search="columbia columbia  newton waterproof mountain outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia  newton waterproof mountain provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="9">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -370,7 +549,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="156.58" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="columbia  newton waterproof hiking"
+         data-search="columbia columbia  newton waterproof hiking outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia  newton waterproof hiking provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="10">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-anchor">
@@ -404,7 +592,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="168.51" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="columbia  newton waterproof canyon"
+         data-search="columbia columbia  newton waterproof canyon outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia  newton waterproof canyon provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="11">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-anchor">
@@ -438,7 +635,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="61.6" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia standard tamiami fishing cypress"
+         data-search="columbia columbia standard tamiami fishing cypress outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia standard tamiami fishing cypress provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="12">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -472,7 +678,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="52.62" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia standard tamiami collegiate x large"
+         data-search="columbia columbia standard tamiami collegiate x large outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia standard tamiami collegiate x large provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="13">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -506,7 +721,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="58.42" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia tamiamitm sleeve shirt vivid"
+         data-search="columbia columbia tamiamitm sleeve shirt vivid outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia tamiamitm sleeve shirt vivid provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="14">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -540,7 +764,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="65.79" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia tamiami ii shirt short sleeve"
+         data-search="columbia columbia tamiami ii shirt short sleeve outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia tamiami ii shirt short sleeve provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="15">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -574,7 +807,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="43.56" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia standard tamiami shirt x small"
+         data-search="columbia columbia standard tamiami shirt x small outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia standard tamiami shirt x small provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="16">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -608,7 +850,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="70.65" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia tamiami sleeve shirt black"
+         data-search="columbia columbia tamiami sleeve shirt black outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia tamiami sleeve shirt black provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="17">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -642,7 +893,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="84.24" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia tamiami sleeve shirt collegiate"
+         data-search="columbia columbia tamiami sleeve shirt collegiate outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia tamiami sleeve shirt collegiate provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="18">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -676,7 +936,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="79.75" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia tamiami sleeve shirt medium"
+         data-search="columbia columbia tamiami sleeve shirt medium outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia tamiami sleeve shirt medium provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="19">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -710,7 +979,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="56.14" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia standard tamiami fishing x small"
+         data-search="columbia columbia standard tamiami fishing x small outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia standard tamiami fishing x small provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="20">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -744,7 +1022,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="88.6" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia bahama sleeve fishing x large"
+         data-search="columbia columbia bahama sleeve fishing x large outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia bahama sleeve fishing x large provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="21">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -778,7 +1065,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="70.21" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia standard slack shirt carbon"
+         data-search="columbia columbia standard slack shirt carbon outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia standard slack shirt carbon provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="22">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -812,7 +1108,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="70.2" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia tamiami sleeve fishing cypress"
+         data-search="columbia columbia tamiami sleeve fishing cypress outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia tamiami sleeve fishing cypress provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="23">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -846,7 +1151,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="The North Face" 
+         data-price="98.83" 
+         data-rating="5" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="the north face vaude  loamer air jacket"
+         data-search="the north face the north face vaude  loamer air jacket outdoor & weatherproof clothing the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face vaude  loamer air jacket provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="24">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-trigger">
@@ -880,7 +1194,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="The North Face" 
+         data-price="65.37" 
+         data-rating="5" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="the north face outdoor products 4052expt pack black"
+         data-search="the north face the north face outdoor products 4052expt pack black outdoor & weatherproof clothing the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face outdoor products 4052expt pack black provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="25">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-trigger">
@@ -914,7 +1237,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="The North Face" 
+         data-price="182.15" 
+         data-rating="5" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="the north face unisex summit vectiv nf02502 running"
+         data-search="the north face the north face unisex summit vectiv nf02502 running outdoor & weatherproof clothing the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face unisex summit vectiv nf02502 running provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="26">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-anchor">
@@ -948,7 +1280,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="The North Face" 
+         data-price="190.48" 
+         data-rating="5" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="the north face unisex summit vectiv nf02502 running"
+         data-search="the north face the north face unisex summit vectiv nf02502 running outdoor & weatherproof clothing the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face unisex summit vectiv nf02502 running provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="27">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-anchor">
@@ -982,7 +1323,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="The North Face" 
+         data-price="178.69" 
+         data-rating="5" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="the north face nfw02503 vectiv enduris  running"
+         data-search="the north face the north face nfw02503 vectiv enduris  running outdoor & weatherproof clothing the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face nfw02503 vectiv enduris  running provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="28">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-anchor">
@@ -1016,7 +1366,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="The North Face" 
+         data-price="178.69" 
+         data-rating="5" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="the north face vectiv enduris  running midnight"
+         data-search="the north face the north face vectiv enduris  running midnight outdoor & weatherproof clothing the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face vectiv enduris  running midnight provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="29">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-anchor">
@@ -1050,7 +1409,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="The North Face" 
+         data-price="162.9" 
+         data-rating="5" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="the north face north face unisex nf52643 running"
+         data-search="the north face the north face north face unisex nf52643 running outdoor & weatherproof clothing the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face north face unisex nf52643 running provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="30">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-anchor">
@@ -1084,7 +1452,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="The North Face" 
+         data-price="148.46" 
+         data-rating="5" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="the north face unisex altamesa altamesa nf02602 running"
+         data-search="the north face the north face unisex altamesa altamesa nf02602 running outdoor & weatherproof clothing the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face unisex altamesa altamesa nf02602 running provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="31">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-trigger">
@@ -1118,7 +1495,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="The North Face" 
+         data-price="127.63" 
+         data-rating="4.8" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="the north face north face venture jacket black"
+         data-search="the north face the north face north face venture jacket black outdoor & weatherproof clothing the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face north face venture jacket black provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="32">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-trigger">
@@ -1152,7 +1538,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="The North Face" 
+         data-price="161.3" 
+         data-rating="4.8" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="the north face helly hansen  crew jacket navy"
+         data-search="the north face the north face helly hansen  crew jacket navy outdoor & weatherproof clothing the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face helly hansen  crew jacket navy provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="33">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-anchor">
@@ -1186,7 +1581,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="The North Face" 
+         data-price="491.51" 
+         data-rating="4.8" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="the north face north face rolling thunder black npf"
+         data-search="the north face the north face north face rolling thunder black npf outdoor & weatherproof clothing the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face north face rolling thunder black npf provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="34">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-anchor">
@@ -1220,7 +1624,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="The North Face" 
+         data-price="148.74" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="the north face north face borealis navy black npf"
+         data-search="the north face the north face north face borealis navy black npf outdoor & weatherproof clothing the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face north face borealis navy black npf provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="35">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-trigger">
@@ -1254,7 +1667,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Salomon" 
+         data-price="133.34" 
+         data-rating="4.8" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="salomon supercross trail running black"
+         data-search="salomon salomon supercross trail running black outdoor & weatherproof clothing salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon supercross trail running black provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="36">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-trigger">
@@ -1288,7 +1710,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Salomon" 
+         data-price="176.28" 
+         data-rating="4.8" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="salomon  ultra flow hiking"
+         data-search="salomon salomon  ultra flow hiking outdoor & weatherproof clothing salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon  ultra flow hiking provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="37">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-anchor">
@@ -1322,7 +1753,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Salomon" 
+         data-price="130.25" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="salomon hydration running bottles optimised"
+         data-search="salomon salomon hydration running bottles optimised outdoor & weatherproof clothing salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon hydration running bottles optimised provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="38">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-trigger">
@@ -1356,7 +1796,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Salomon" 
+         data-price="133.43" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="salomon hydration included precision optimised"
+         data-search="salomon salomon hydration included precision optimised outdoor & weatherproof clothing salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon hydration included precision optimised provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="39">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-trigger">
@@ -1390,7 +1839,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Salomon" 
+         data-price="143.69" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="salomon hydration included precision optimised"
+         data-search="salomon salomon hydration included precision optimised outdoor & weatherproof clothing salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon hydration included precision optimised provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="40">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-trigger">
@@ -1424,7 +1882,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Salomon" 
+         data-price="176.17" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="salomon speedcross trail running 13 13 5"
+         data-search="salomon salomon speedcross trail running 13 13 5 outdoor & weatherproof clothing salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon speedcross trail running 13 13 5 provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="41">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-anchor">
@@ -1458,7 +1925,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Salomon" 
+         data-price="181.09" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="salomon speedcross trail running phantom"
+         data-search="salomon salomon speedcross trail running phantom outdoor & weatherproof clothing salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon speedcross trail running phantom provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="42">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-anchor">
@@ -1492,7 +1968,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Salomon" 
+         data-price="459.2" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="salomon speedcross forces trail running"
+         data-search="salomon salomon speedcross forces trail running outdoor & weatherproof clothing salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon speedcross forces trail running provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="43">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-anchor">
@@ -1526,7 +2011,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Salomon" 
+         data-price="185.08" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="salomon  trail running phantom"
+         data-search="salomon salomon  trail running phantom outdoor & weatherproof clothing salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon  trail running phantom provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="44">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-anchor">
@@ -1560,7 +2054,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Salomon" 
+         data-price="185.28" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="salomon  ultra hiking beige"
+         data-search="salomon salomon  ultra hiking beige outdoor & weatherproof clothing salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon  ultra hiking beige provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="45">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-anchor">
@@ -1594,7 +2097,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Salomon" 
+         data-price="352.56" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="salomon  quest shopping black"
+         data-search="salomon salomon  quest shopping black outdoor & weatherproof clothing salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon  quest shopping black provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="46">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-anchor">
@@ -1628,7 +2140,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Salomon" 
+         data-price="261.58" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="salomon mammut waterproof terracare® lightweight black hot"
+         data-search="salomon salomon mammut waterproof terracare® lightweight black hot outdoor & weatherproof clothing salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon mammut waterproof terracare® lightweight black hot provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="47">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-anchor">
@@ -1662,7 +2183,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Salomon" 
+         data-price="172.73" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="salomon jack wolfskin everquest texapore phantom"
+         data-search="salomon salomon jack wolfskin everquest texapore phantom outdoor & weatherproof clothing salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon jack wolfskin everquest texapore phantom provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="48">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-anchor">
@@ -1696,7 +2226,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Salomon" 
+         data-price="116.8" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="salomon mammut tall black 22 casual"
+         data-search="salomon salomon mammut tall black 22 casual outdoor & weatherproof clothing salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon mammut tall black 22 casual provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="49">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-trigger">
@@ -1730,7 +2269,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Salomon" 
+         data-price="65.45" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="salomon skysper lantc lightweight ventilation breathable"
+         data-search="salomon salomon skysper lantc lightweight ventilation breathable outdoor & weatherproof clothing salomon authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the salomon salomon skysper lantc lightweight ventilation breathable provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="50">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Salomon</span>
         <span class="card-tier-pill tier-trigger">
@@ -1764,7 +2312,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="56.14" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia terminal tackle sleeve nightshade"
+         data-search="columbia columbia terminal tackle sleeve nightshade outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia terminal tackle sleeve nightshade provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="51">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -1798,7 +2355,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="49.15" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia tamiami sleeve protection moisture wicking"
+         data-search="columbia columbia tamiami sleeve protection moisture wicking outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia tamiami sleeve protection moisture wicking provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="52">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -1832,7 +2398,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="63.89" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia clemson tigers tamiami x large"
+         data-search="columbia columbia clemson tigers tamiami x large outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia clemson tigers tamiami x large provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="53">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -1866,7 +2441,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="The North Face" 
+         data-price="196.79" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="the north face north face router meld black npf"
+         data-search="the north face the north face north face router meld black npf outdoor & weatherproof clothing the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face north face router meld black npf provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="54">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-anchor">
@@ -1900,7 +2484,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="The North Face" 
+         data-price="185.01" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="the north face north face basin black black npf"
+         data-search="the north face the north face north face basin black black npf outdoor & weatherproof clothing the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face north face basin black black npf provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="55">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-anchor">
@@ -1934,7 +2527,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="The North Face" 
+         data-price="190.56" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="the north face north face borealis repellent compartment"
+         data-search="the north face the north face north face borealis repellent compartment outdoor & weatherproof clothing the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face north face borealis repellent compartment provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="56">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-anchor">
@@ -1968,7 +2570,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="The North Face" 
+         data-price="195.86" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="the north face unisex summit vectiv nf02501 running"
+         data-search="the north face the north face unisex summit vectiv nf02501 running outdoor & weatherproof clothing the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face unisex summit vectiv nf02501 running provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="57">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-anchor">
@@ -2002,7 +2613,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="The North Face" 
+         data-price="243.67" 
+         data-rating="4.7" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="the north face unisex summit vectiv nf02501 running"
+         data-search="the north face the north face unisex summit vectiv nf02501 running outdoor & weatherproof clothing the north face authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the the north face the north face unisex summit vectiv nf02501 running provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="58">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">The North Face</span>
         <span class="card-tier-pill tier-anchor">
@@ -2036,7 +2656,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="74.28" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia bahamatm sleeve shirt bahama"
+         data-search="columbia columbia bahamatm sleeve shirt bahama outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia bahamatm sleeve shirt bahama provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="59">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -2070,7 +2699,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="49.04" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia silver utility ancient x large"
+         data-search="columbia columbia silver utility ancient x large outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia silver utility ancient x large provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="60">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -2104,7 +2742,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="77.22" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia silver ridge cargo short"
+         data-search="columbia columbia silver ridge cargo short outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia silver ridge cargo short provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="61">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -2138,7 +2785,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="140.41" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia  waterproof regular stratus"
+         data-search="columbia columbia  waterproof regular stratus outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia  waterproof regular stratus provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="62">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -2172,7 +2828,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="119.15" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia newton ridge waterproof hiking"
+         data-search="columbia columbia newton ridge waterproof hiking outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia newton ridge waterproof hiking provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="63">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -2206,7 +2871,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="123.76" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia  newton ridge hiking"
+         data-search="columbia columbia  newton ridge hiking outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia  newton ridge hiking provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="64">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -2240,7 +2914,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="176.21" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="columbia  newton alpine hiking"
+         data-search="columbia columbia  newton alpine hiking outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia  newton alpine hiking provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="65">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-anchor">
@@ -2274,7 +2957,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="182.55" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="columbia waterproof combines technology waterproof"
+         data-search="columbia columbia waterproof combines technology waterproof outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia waterproof combines technology waterproof provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="66">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-anchor">
@@ -2308,7 +3000,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="149.25" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia newton  hiking morning"
+         data-search="columbia columbia newton  hiking morning outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia newton  hiking morning provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="67">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -2342,7 +3043,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="112.59" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia  newton nubuck sneaker"
+         data-search="columbia columbia  newton nubuck sneaker outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia  newton nubuck sneaker provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="68">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -2376,7 +3086,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="140.36" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia  firecamp hiking black"
+         data-search="columbia columbia  firecamp hiking black outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia  firecamp hiking black provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="69">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -2410,7 +3129,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="207.88" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="columbia  newton leather trekking"
+         data-search="columbia columbia  newton leather trekking outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia  newton leather trekking provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="70">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-anchor">
@@ -2444,7 +3172,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="181.94" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="anchor" 
+         data-title="columbia newton waterproof hiking mountain"
+         data-search="columbia columbia newton waterproof hiking mountain outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia newton waterproof hiking mountain provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="71">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-anchor">
@@ -2478,7 +3215,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="140.41" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia  newton trekking hiking"
+         data-search="columbia columbia  newton trekking hiking outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia  newton trekking hiking provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="72">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -2512,7 +3258,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="79.54" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia unisex child newton hiking mountain"
+         data-search="columbia columbia unisex child newton hiking mountain outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia unisex child newton hiking mountain provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="73">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -2546,7 +3301,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="54.82" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia tamiami fishing cypress x large"
+         data-search="columbia columbia tamiami fishing cypress x large outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia tamiami fishing cypress x large provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="74">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -2580,7 +3344,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="66.47" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia collegiate breathable lightweight available"
+         data-search="columbia columbia collegiate breathable lightweight available outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia collegiate breathable lightweight available provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="75">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -2614,7 +3387,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="84.26" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia tamiami sleeve shirt white"
+         data-search="columbia columbia tamiami sleeve shirt white outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia tamiami sleeve shirt white provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="76">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -2648,7 +3430,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="63.07" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia tamiami sleeve crushed marlin"
+         data-search="columbia columbia tamiami sleeve crushed marlin outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia tamiami sleeve crushed marlin provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="77">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -2682,7 +3473,16 @@
       </div>
     </div>
 
-    <div class="camp-card" data-category="outdoor-weatherproof-clothing">
+    <div class="camp-card" 
+         data-category="outdoor-weatherproof-clothing" 
+         data-brand="Columbia" 
+         data-price="84.26" 
+         data-rating="4.6" 
+         data-reviews="250" 
+         data-tier="trigger" 
+         data-title="columbia bahama sleeve shirt medium"
+         data-search="columbia columbia bahama sleeve shirt medium outdoor & weatherproof clothing columbia authentic engineering & heavy-duty outdoor construction validated for singapore tropical humidity & coastal environments amazon.sg prime eligible with expedited local singapore delivery backed by singapore 30-day money-back guarantee & buyer warranty the columbia columbia bahama sleeve shirt medium provides unmatched dependability for outdoor lifestyle and camping in singapore, from relaxed beach campsites at east coast park to jungle expeditions across pulau ubin and macritchie reservoir."
+         data-original-index="78">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">Columbia</span>
         <span class="card-tier-pill tier-trigger">
@@ -2717,5 +3517,7 @@
     </div>
     </div>
   </main>
+
+  <script src="../assets/catalog-filters.js?v=20261104_v2"></script>
 </body>
 </html>
