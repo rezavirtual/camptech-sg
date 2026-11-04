@@ -27,6 +27,15 @@ export class SiteBuilder {
 
     // 1. Output .nojekyll for GitHub Pages
     fs.writeFileSync(path.join(this.distDir, '.nojekyll'), '', 'utf-8');
+    // 1. Copy product photos from assets/products to dist/assets/products
+    const srcAssets = path.join(CONFIG.paths.root, 'assets', 'products');
+    if (fs.existsSync(srcAssets)) {
+      const files = fs.readdirSync(srcAssets);
+      files.forEach(f => {
+        fs.copyFileSync(path.join(srcAssets, f), path.join(this.assetsProductsDir, f));
+      });
+      console.log(`✔ Copied ${files.length} product photos to dist/assets/products`);
+    }
 
     // 2. Output Management Dashboard (/dashboard/)
     const srcDashboard = path.join(CONFIG.paths.root, 'dashboard', 'index.html');
@@ -695,7 +704,7 @@ footer.camp-footer {
 
   renderProductCard(p, isCategory = false) {
     const detailLink = isCategory ? `../products/${p.slug}.html` : `./products/${p.slug}.html`;
-    const imgSrc = p.imageUrl;
+    const imgSrc = isCategory ? `../assets/products/${p.imageFile}` : `./assets/products/${p.imageFile}`;
 
     return `
     <div class="camp-card" data-category="${p.categorySlug}">
@@ -943,7 +952,7 @@ footer.camp-footer {
         </div>
 
         <div class="detail-gallery">
-          <img src="${product.imageUrl}" alt="${product.title}" class="detail-img">
+          <img src="../assets/products/${product.imageFile}" alt="${product.title}" class="detail-img" onerror="this.src='${product.officialImageUrl}'">
         </div>
 
         <h2 style="font-size: 1.35rem; font-weight: 700; margin-bottom: 12px;">Singapore Environmental & Field Specifications</h2>
