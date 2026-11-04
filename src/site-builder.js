@@ -45,6 +45,11 @@ export class SiteBuilder {
 
     // 3. Output High-End Modern Stylesheet
     this.writeStylesheet();
+    // Copy catalog-filters.js to dist/assets/
+    const srcFiltersJs = path.join(CONFIG.paths.root, 'assets', 'catalog-filters.js');
+    if (fs.existsSync(srcFiltersJs)) {
+      fs.copyFileSync(srcFiltersJs, path.join(this.assetsDir, 'catalog-filters.js'));
+    }
 
     // 4. Generate Individual Product Review Pages (52 pages)
     for (const item of products) {
@@ -293,6 +298,274 @@ header.camp-header {
   background: #ffffff;
   color: var(--camp-text-primary);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+
+/* ==========================================================================
+   INTERACTIVE SORTING & FILTERING CONTROL PANEL
+   ========================================================================== */
+.catalog-control-panel {
+  background: #ffffff;
+  border: 1px solid var(--camp-border);
+  border-radius: 18px;
+  padding: 22px 24px;
+  margin: 30px 0 25px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.control-row-primary {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.search-box-wrapper {
+  position: relative;
+  flex: 1 1 360px;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  font-size: 1rem;
+  color: var(--camp-text-tertiary);
+  pointer-events: none;
+}
+
+#searchInput {
+  width: 100%;
+  height: 44px;
+  padding: 0 40px 0 42px;
+  border-radius: 12px;
+  border: 1px solid var(--camp-border);
+  background: #f8fafc;
+  color: var(--camp-text-primary);
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+#searchInput:focus {
+  background: #ffffff;
+  border-color: var(--camp-primary);
+  box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.12);
+}
+
+.clear-search-btn {
+  position: absolute;
+  right: 12px;
+  background: #e2e8f0;
+  border: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.72rem;
+  color: var(--camp-text-secondary);
+  transition: background 0.2s;
+}
+
+.clear-search-btn:hover {
+  background: #cbd5e1;
+}
+
+.sort-box-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+.control-label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--camp-text-secondary);
+  white-space: nowrap;
+}
+
+.camp-select {
+  height: 44px;
+  padding: 0 34px 0 14px;
+  border-radius: 12px;
+  border: 1px solid var(--camp-border);
+  background: #f8fafc url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--camp-text-primary);
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.camp-select:focus, .camp-select:hover {
+  border-color: var(--camp-primary);
+  background-color: #ffffff;
+}
+
+.control-row-secondary {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--camp-border-light);
+}
+
+.filter-dropdown-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-reset-filters {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+  padding: 9px 16px;
+  border-radius: 980px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: auto;
+}
+
+.btn-reset-filters:hover {
+  background: #fecaca;
+  color: #991b1b;
+}
+
+.segmented-dock-wrapper {
+  margin-top: 14px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.active-filters-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.counter-display {
+  font-size: 0.88rem;
+  color: var(--camp-text-secondary);
+  font-weight: 500;
+}
+
+.count-highlight {
+  font-weight: 800;
+  color: var(--camp-primary);
+  font-size: 1rem;
+}
+
+.active-badge-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-pill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 980px;
+  cursor: pointer;
+}
+
+.filter-pill-tag:hover {
+  background: #d1fae5;
+}
+
+.no-results-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid var(--camp-border);
+  margin-bottom: 50px;
+}
+
+.no-results-icon {
+  font-size: 3rem;
+  margin-bottom: 12px;
+}
+
+.no-results-state h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--camp-text-primary);
+  margin-bottom: 8px;
+}
+
+.no-results-state p {
+  color: var(--camp-text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 22px;
+}
+
+@media (max-width: 768px) {
+  .catalog-control-panel {
+    padding: 16px;
+    margin: 20px 0 18px;
+  }
+  .control-row-primary {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .search-box-wrapper {
+    flex: 1 1 100%;
+  }
+  .sort-box-wrapper {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .sort-box-wrapper .camp-select {
+    flex: 1;
+  }
+  .control-row-secondary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding-bottom: 14px;
+  }
+  .filter-dropdown-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+  }
+  .filter-dropdown-group .camp-select {
+    width: 100%;
+  }
+  .btn-reset-filters {
+    grid-column: span 2;
+    text-align: center;
+    width: 100%;
+    margin-left: 0;
+  }
 }
 
 .product-grid {
@@ -702,13 +975,23 @@ footer.camp-footer {
     fs.writeFileSync(path.join(this.assetsDir, 'styles.css'), css, 'utf-8');
   }
 
-  renderProductCard(p, isCategory = false) {
+  renderProductCard(p, isCategory = false, index = 0) {
     const detailLink = isCategory ? `../products/${p.slug}.html` : `./products/${p.slug}.html`;
     const imgSrc = isCategory ? `../assets/products/${p.imageFile}` : `./assets/products/${p.imageFile}`;
     const affUrl = p.affiliateUrl || `https://www.amazon.sg/dp/${p.asin}/?tag=pettechsg-22&linkCode=ogi&th=1&psc=1`;
+    const searchTokens = [p.brand, p.title, p.category, (p.features || []).join(' '), p.rawDescription || ''].join(' ').toLowerCase().replace(/"/g, '&quot;');
 
     return `
-    <div class="camp-card" data-category="${p.categorySlug}">
+    <div class="camp-card" 
+         data-category="${p.categorySlug}" 
+         data-brand="${p.brand}" 
+         data-price="${p.priceSgd}" 
+         data-rating="${p.rating}" 
+         data-reviews="${p.reviewsCount}" 
+         data-tier="${p.isHighTicket ? 'anchor' : 'trigger'}" 
+         data-title="${p.title.toLowerCase().replace(/"/g, '&quot;')}"
+         data-search="${searchTokens}"
+         data-original-index="${index}">
       <div class="card-media-wrapper" style="position: relative; height: 260px; background: #ffffff; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
         <span class="card-brand-badge">${p.brand}</span>
         <span class="card-tier-pill ${p.isHighTicket ? 'tier-anchor' : 'tier-trigger'}">
@@ -742,9 +1025,18 @@ footer.camp-footer {
       </div>
     </div>`;
   }
-
   renderIndexPage(products, guides) {
-    const cardsHtml = products.map(p => this.renderProductCard(p, false)).join('\n');
+    const cardsHtml = products.map((p, idx) => this.renderProductCard(p, false, idx)).join('\n');
+
+    // Brand counts for dropdown
+    const brandCounts = {};
+    products.forEach(p => {
+      brandCounts[p.brand] = (brandCounts[p.brand] || 0) + 1;
+    });
+    const topBrands = Object.entries(brandCounts).sort((a,b) => b[1] - a[1]);
+    const brandOptionsHtml = topBrands.map(([b, count]) => 
+      `<option value="${b}">${b} (${count})</option>`
+    ).join('\n              ');
 
     return `<!DOCTYPE html>
 <html lang="en-SG">
@@ -753,7 +1045,7 @@ footer.camp-footer {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CampTech SG - Best Camping Equipment, Tents, Outdoor Electronics & Apparel Singapore (2026)</title>
   <meta name="description" content="Singapore's premier camping & outdoor adventure gear authority. Tested reviews of waterproof pop-up tents, camping stoves, solar power banks, multi-tools, and weatherproof clothing for East Coast Park, Pulau Ubin, and Malaysia trail expeditions.">
-  <link rel="stylesheet" href="./assets/styles.css?v=20261104_v1">
+  <link rel="stylesheet" href="./assets/styles.css?v=20261104_v2">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -791,28 +1083,110 @@ footer.camp-footer {
         <span class="eyebrow-tag">Singapore Tropical Camping & Trail Blueprint • 2026 Tested</span>
         <h1 class="hero-title">Equip Your Adventure. Tested for the Tropics.</h1>
         <p class="hero-subtitle">
-          52 field-tested camping tents, portable camp stoves, rugged solar power banks, heavy-duty multi-tools, and UPF 50+ weatherproof apparel curated for Singapore coastal parks and Southeast Asian rainforest expeditions.
+          ${products.length} field-tested camping tents, portable camp stoves, rugged solar power banks, heavy-duty multi-tools, and UPF 50+ weatherproof apparel curated for Singapore coastal parks and Southeast Asian rainforest expeditions.
         </p>
         <div class="hero-cta-group">
-          <a href="#productGrid" class="btn-camp-primary">Browse All 52 Camping Items &rarr;</a>
+          <a href="#productGrid" class="btn-camp-primary">Browse All ${products.length} Camping Items &rarr;</a>
           <a href="#guides" class="btn-camp-secondary">Read Singapore Camp Guides</a>
         </div>
       </div>
     </section>
 
     <section class="container" id="productGrid">
-      <div class="filter-container">
-        <div class="segmented-dock">
-          <button class="segment-btn active" onclick="filterCategory('all', this)">All Gear (${products.length})</button>
-          <button class="segment-btn" onclick="filterCategory('tents-shelters-sleeping', this)">Tents & Sleeping</button>
-          <button class="segment-btn" onclick="filterCategory('camp-kitchen-cooking', this)">Camp Kitchen</button>
-          <button class="segment-btn" onclick="filterCategory('outdoor-electronics-power', this)">Electronics & Power</button>
-          <button class="segment-btn" onclick="filterCategory('gear-tools-furniture', this)">Gear & Furniture</button>
-          <button class="segment-btn" onclick="filterCategory('outdoor-weatherproof-clothing', this)">Outdoor Apparel</button>
+      <!-- Interactive Filtering & Sorting Control Panel -->
+      <div class="catalog-control-panel">
+        <!-- Search & Sort Row -->
+        <div class="control-row-primary">
+          <div class="search-box-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Search ${products.length} items (e.g. Coleman tent, Camping Moon stove, Columbia, Salomon, Jackery)...">
+            <button id="clearSearchBtn" class="clear-search-btn" onclick="clearSearch()" title="Clear Search" style="display: none;">✕</button>
+          </div>
+
+          <div class="sort-box-wrapper">
+            <label for="sortSelect" class="control-label">Sort by:</label>
+            <select id="sortSelect" class="camp-select">
+              <option value="featured">Featured / Best Sellers</option>
+              <option value="price-asc">Cost: Low to High (S$)</option>
+              <option value="price-desc">Cost: High to Low (S$)</option>
+              <option value="rating-desc">Highest Customer Rating (⭐ 5.0 → 4.5)</option>
+              <option value="reviews-desc">Most Reviewed (Popularity)</option>
+              <option value="name-asc">Product Name (A → Z)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Filter Dropdowns Row -->
+        <div class="control-row-secondary">
+          <!-- Brand Filter -->
+          <div class="filter-dropdown-group">
+            <label for="brandSelect" class="control-label">Brand:</label>
+            <select id="brandSelect" class="camp-select">
+              <option value="all">All Brands (${products.length})</option>
+              ${brandOptionsHtml}
+            </select>
+          </div>
+
+          <!-- Price Range Filter -->
+          <div class="filter-dropdown-group">
+            <label for="priceSelect" class="control-label">Cost / Price:</label>
+            <select id="priceSelect" class="camp-select">
+              <option value="all">Any Price</option>
+              <option value="under-50">Under S$50 (Budget Essentials)</option>
+              <option value="50-150">S$50 – S$150 (Mid-Range Gear)</option>
+              <option value="150-300">S$150 – S$300 (Pro Camping)</option>
+              <option value="over-300">S$300+ (Power Stations & Tents)</option>
+            </select>
+          </div>
+
+          <!-- Tier / Rating Filter -->
+          <div class="filter-dropdown-group">
+            <label for="tierSelect" class="control-label">Tier / Rating:</label>
+            <select id="tierSelect" class="camp-select">
+              <option value="all">All Items</option>
+              <option value="anchor">Top Performance (Hero Picks)</option>
+              <option value="trigger">Popular Picks (High Volume)</option>
+              <option value="rating-48">⭐ 4.8 Stars & Above</option>
+            </select>
+          </div>
+
+          <!-- Reset Button -->
+          <button id="resetFiltersBtn" class="btn-reset-filters" onclick="resetAllFilters()" style="display: none;">
+            Reset Filters ✕
+          </button>
+        </div>
+
+        <!-- Category Quick-Pills Row -->
+        <div class="segmented-dock-wrapper">
+          <div class="segmented-dock" id="categoryDock">
+            <button class="segment-btn active" data-cat="all" onclick="selectCategory('all', this)">All Categories (${products.length})</button>
+            <button class="segment-btn" data-cat="tents-shelters-sleeping" onclick="selectCategory('tents-shelters-sleeping', this)">🏕️ Tents & Sleeping</button>
+            <button class="segment-btn" data-cat="camp-kitchen-cooking" onclick="selectCategory('camp-kitchen-cooking', this)">🍳 Camp Kitchen</button>
+            <button class="segment-btn" data-cat="outdoor-electronics-power" onclick="selectCategory('outdoor-electronics-power', this)">⚡ Battery & Power</button>
+            <button class="segment-btn" data-cat="gear-tools-furniture" onclick="selectCategory('gear-tools-furniture', this)">🪓 Gear & Furniture</button>
+            <button class="segment-btn" data-cat="outdoor-weatherproof-clothing" onclick="selectCategory('outdoor-weatherproof-clothing', this)">🥾 Weatherproof Apparel</button>
+          </div>
+        </div>
+
+        <!-- Live Counter & Active Badges -->
+        <div class="active-filters-bar">
+          <div class="counter-display">
+            Showing <span id="displayedCount" class="count-highlight">${products.length}</span> of <span class="count-total">${products.length}</span> camping products
+          </div>
+          <div class="active-badge-tags" id="activeBadgeTags"></div>
         </div>
       </div>
 
-      <div class="product-grid">
+      <!-- No Results State -->
+      <div id="noResultsState" class="no-results-state" style="display: none;">
+        <div class="no-results-icon">🔍</div>
+        <h3>No matching camping gear found</h3>
+        <p>Try adjusting your search keyword, price range, or brand filter.</p>
+        <button class="btn-camp-primary" onclick="resetAllFilters()">Reset All Filters</button>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="product-grid" id="mainProductGrid">
         ${cardsHtml}
       </div>
     </section>
@@ -820,19 +1194,16 @@ footer.camp-footer {
     <!-- Singapore SEO Buyer Guides -->
     <section class="guides-section" id="guides">
       <div class="container">
-        <span class="eyebrow-tag">Editorial Field Guides</span>
-        <h2 style="font-size: 2.1rem; font-weight: 800; letter-spacing: -0.03em; color: var(--camp-text-primary);">
-          Singapore Camping & Wilderness Survival Blueprints
-        </h2>
-        <p style="color: var(--camp-text-secondary); font-size: 1.05rem; margin-top: 6px;">
-          Expert-tested guides on park camping permits, tropical monsoon waterproofing, and island bushcraft for Singaporeans.
-        </p>
+        <div class="sec-header">
+          <h2 class="sec-title">Singapore Outdoor & Trail Field Guides (2026)</h2>
+          <p class="sec-subtitle">Comprehensive editorial blueprints engineered for coastal park camping, Pulau Ubin wilderness stays, and cross-border jungle trails.</p>
+        </div>
         <div class="guides-grid">
           ${guides.map(g => `
             <div class="guide-card">
-              <div class="guide-tag">Singapore Field Guide</div>
-              <h3 class="guide-title"><a href="./guides/${g.slug}.html">${g.seoTitle}</a></h3>
-              <p class="guide-summary">${g.summary}</p>
+              <span class="guide-badge">${g.readTime}</span>
+              <h3 class="guide-title">${g.title}</h3>
+              <p class="guide-excerpt">${g.excerpt}</p>
               <a href="./guides/${g.slug}.html" style="font-weight: 600; font-size: 0.88rem; color: var(--camp-primary);">
                 Read Full Blueprint &rarr;
               </a>
@@ -855,27 +1226,24 @@ footer.camp-footer {
     </div>
   </footer>
 
-  <script>
-    function filterCategory(cat, btn) {
-      document.querySelectorAll('.segment-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const cards = document.querySelectorAll('.camp-card');
-      cards.forEach(c => {
-        if (cat === 'all' || c.getAttribute('data-category') === cat) {
-          c.style.display = 'flex';
-        } else {
-          c.style.display = 'none';
-        }
-      });
-    }
-  </script>
+  <script src="./assets/catalog-filters.js?v=20261104_v2"></script>
 </body>
 </html>`;
   }
 
   renderCategoryPage(catSlug, catProducts, allProducts) {
     const catMeta = CONFIG.categories.find(c => c.slug === catSlug) || { name: catSlug, desc: '' };
-    const cardsHtml = catProducts.map(p => this.renderProductCard(p, true)).join('\n');
+    const cardsHtml = catProducts.map((p, idx) => this.renderProductCard(p, true, idx)).join('\n');
+
+    // Brands in this specific category
+    const brandCounts = {};
+    catProducts.forEach(p => {
+      brandCounts[p.brand] = (brandCounts[p.brand] || 0) + 1;
+    });
+    const topBrands = Object.entries(brandCounts).sort((a,b) => b[1] - a[1]);
+    const brandOptionsHtml = topBrands.map(([b, count]) => 
+      `<option value="${b}">${b} (${count})</option>`
+    ).join('\n              ');
 
     return `<!DOCTYPE html>
 <html lang="en-SG">
@@ -884,7 +1252,7 @@ footer.camp-footer {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${catMeta.name} Singapore - Best Camping Gear & Reviews (2026)</title>
   <meta name="description" content="${catMeta.desc}">
-  <link rel="stylesheet" href="../assets/styles.css?v=20261104_v1">
+  <link rel="stylesheet" href="../assets/styles.css?v=20261104_v2">
 </head>
 <body>
   <header class="camp-header">
@@ -892,28 +1260,118 @@ footer.camp-footer {
       <a href="../index.html" class="brand-mark">
         <span class="brand-logo-icon">🏕️</span>
         <span>CampTech SG</span>
+        <span class="sg-badge">Singapore Outdoor Authority</span>
       </a>
       <nav class="nav-menu">
-        <a href="../index.html" class="nav-link">All Gear (52)</a>
+        <a href="../index.html" class="nav-link">All Gear (${allProducts.length})</a>
         <a href="../index.html#guides" class="nav-link">Singapore Guides</a>
+        <a href="./tents-shelters-sleeping.html" class="nav-link">Tents & Sleeping</a>
+        <a href="./camp-kitchen-cooking.html" class="nav-link">Camp Kitchen</a>
+        <a href="./outdoor-electronics-power.html" class="nav-link">Electronics & Power</a>
+        <a href="./gear-tools-furniture.html" class="nav-link">Gear & Tools</a>
+        <a href="./outdoor-weatherproof-clothing.html" class="nav-link">Outdoor Apparel</a>
       </nav>
     </div>
   </header>
 
   <main class="container" style="padding-top: 40px;">
-    <div style="margin-bottom: 30px;">
-      <a href="../index.html" style="font-size: 0.85rem; color: var(--camp-primary); font-weight: 600;">&larr; Return to All Camping Gear</a>
-      <h1 style="font-size: 2.2rem; font-weight: 800; margin-top: 10px;">${catMeta.name}</h1>
+    <div style="margin-bottom: 25px;">
+      <a href="../index.html" style="font-size: 0.88rem; color: var(--camp-primary); font-weight: 600;">&larr; Return to All ${allProducts.length} Camping Items</a>
+      <h1 style="font-size: 2.3rem; font-weight: 800; margin-top: 10px; color: var(--camp-text-primary);">${catMeta.name}</h1>
       <p style="color: var(--camp-text-secondary); margin-top: 6px; font-size: 1.05rem;">${catMeta.desc}</p>
     </div>
 
-    <div class="product-grid">
+    <!-- Category Filter & Sort Control Panel -->
+    <div class="catalog-control-panel">
+      <!-- Search & Sort Row -->
+      <div class="control-row-primary">
+        <div class="search-box-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Search ${catProducts.length} items in ${catMeta.name}...">
+          <button id="clearSearchBtn" class="clear-search-btn" onclick="clearSearch()" title="Clear Search" style="display: none;">✕</button>
+        </div>
+
+        <div class="sort-box-wrapper">
+          <label for="sortSelect" class="control-label">Sort by:</label>
+          <select id="sortSelect" class="camp-select">
+            <option value="featured">Featured / Best Sellers</option>
+            <option value="price-asc">Cost: Low to High (S$)</option>
+            <option value="price-desc">Cost: High to Low (S$)</option>
+            <option value="rating-desc">Highest Customer Rating (⭐ 5.0 → 4.5)</option>
+            <option value="reviews-desc">Most Reviewed (Popularity)</option>
+            <option value="name-asc">Product Name (A → Z)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Filter Dropdowns Row -->
+      <div class="control-row-secondary">
+        <!-- Brand Filter -->
+        <div class="filter-dropdown-group">
+          <label for="brandSelect" class="control-label">Brand:</label>
+          <select id="brandSelect" class="camp-select">
+            <option value="all">All Brands (${catProducts.length})</option>
+            ${brandOptionsHtml}
+          </select>
+        </div>
+
+        <!-- Price Range Filter -->
+        <div class="filter-dropdown-group">
+          <label for="priceSelect" class="control-label">Cost / Price:</label>
+          <select id="priceSelect" class="camp-select">
+            <option value="all">Any Price</option>
+            <option value="under-50">Under S$50 (Budget)</option>
+            <option value="50-150">S$50 – S$150 (Mid-Range)</option>
+            <option value="150-300">S$150 – S$300 (Pro Gear)</option>
+            <option value="over-300">S$300+ (High-Ticket)</option>
+          </select>
+        </div>
+
+        <!-- Tier / Rating Filter -->
+        <div class="filter-dropdown-group">
+          <label for="tierSelect" class="control-label">Tier / Rating:</label>
+          <select id="tierSelect" class="camp-select">
+            <option value="all">All Items</option>
+            <option value="anchor">Top Performance</option>
+            <option value="trigger">Popular Picks</option>
+            <option value="rating-48">⭐ 4.8 Stars & Above</option>
+          </select>
+        </div>
+
+        <!-- Reset Button -->
+        <button id="resetFiltersBtn" class="btn-reset-filters" onclick="resetAllFilters()" style="display: none;">
+          Reset Filters ✕
+        </button>
+      </div>
+
+      <!-- Live Counter & Active Badges -->
+      <div class="active-filters-bar">
+        <div class="counter-display">
+          Showing <span id="displayedCount" class="count-highlight">${catProducts.length}</span> of <span class="count-total">${catProducts.length}</span> items in ${catMeta.name}
+        </div>
+        <div class="active-badge-tags" id="activeBadgeTags"></div>
+      </div>
+    </div>
+
+    <!-- No Results State -->
+    <div id="noResultsState" class="no-results-state" style="display: none;">
+      <div class="no-results-icon">🔍</div>
+      <h3>No matching items found in this category</h3>
+      <p>Try clearing your keyword, adjusting your price range, or clearing the brand filter.</p>
+      <button class="btn-camp-primary" onclick="resetAllFilters()">Reset Filters</button>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="product-grid" id="mainProductGrid">
       ${cardsHtml}
     </div>
   </main>
+
+  <script src="../assets/catalog-filters.js?v=20261104_v2"></script>
 </body>
 </html>`;
   }
+
 
   renderProductPage(product, allProducts) {
     return `<!DOCTYPE html>
