@@ -23,7 +23,7 @@ export const CONFIG = {
   site: {
     name: 'CampTech SG',
     tagline: 'Singapore Tropical Camping Gear, Tents, Outdoor Electronics & Trail Apparel (2026)',
-    url: 'https://rezavirtual.github.io/camptech-sg',
+    url: 'https://camp.auraequip.com',
     locale: 'en-SG',
     contactEmail: 'rezavirtual@gmail.com',
     defaultTag: 'pettechsg-22'

@@ -1228,7 +1228,7 @@ footer.camp-footer {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "CampTech SG",
-    "url": "https://rezavirtual.github.io/camptech-sg",
+    "url": "https://camp.auraequip.com",
     "description": "Singapore's Premier Tropical Camping & Outdoor Adventure Gear Authority",
     "inLanguage": "en-SG"
   }
