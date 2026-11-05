@@ -1,0 +1,11 @@
+{
+  "name": "camptech-sg",
+  "version": "1.0.0",
+  "description": "CampTech SG - Singapore Tropical Camping Gear, Tents, Outdoor Electronics & Apparel",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/rebuild-site.js",
+    "audit": "node scripts/quality-manager-daily-check.js"
+  },
+  "dependencies": {}
+}

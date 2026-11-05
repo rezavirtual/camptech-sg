@@ -1,0 +1,22 @@
+name: Daily Quality & Affiliate Audit
+
+on:
+  schedule:
+    # Run daily at 01:00 UTC (09:00 SGT)
+    - cron: '0 1 * * *'
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Quality Manager Daily Check
+        run: node scripts/quality-manager-daily-check.js
