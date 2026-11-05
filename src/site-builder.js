@@ -51,6 +51,16 @@ export class SiteBuilder {
       fs.copyFileSync(srcFiltersJs, path.join(this.assetsDir, 'catalog-filters.js'));
     }
 
+    // 4. Clean stale product pages and generate current ones
+    const validSlugs = new Set(products.map(p => p.slug));
+    if (fs.existsSync(this.productsDir)) {
+      fs.readdirSync(this.productsDir).forEach(f => {
+        if (f.endsWith('.html') && !validSlugs.has(f.replace('.html', ''))) {
+          fs.unlinkSync(path.join(this.productsDir, f));
+        }
+      });
+    }
+
     // 4. Generate Individual Product Review Pages (52 pages)
     for (const item of products) {
       const html = this.renderProductPage(item, products);

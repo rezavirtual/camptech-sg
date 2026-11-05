@@ -1,2 +1,2 @@
 @echo off
-node %*
+call agy-node.cmd %*

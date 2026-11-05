@@ -1,3 +1,6 @@
 node_modules/
 .env
 dist/
+*.zip
+data/*-candidates.json
+data/*-scanned*.json

@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /dashboard/
+Disallow: /admin/
 
-Sitemap: https://rezavirtual.github.io/camptech-sg/sitemap.xml
+Sitemap: https://camp.auraequip.com/sitemap.xml
