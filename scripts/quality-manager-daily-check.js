@@ -20,7 +20,9 @@ let errors = 0;
 
 // 1. Verify affiliate tags
 products.forEach((p, i) => {
-  if (!p.affiliateUrl.includes('tag=pettechsg-22')) {
+  // Seed data may omit affiliateUrl; mirror the fallback used in src/site-builder.js
+  const affUrl = p.affiliateUrl || (p.asin ? `https://www.amazon.sg/dp/${p.asin}/?tag=pettechsg-22&linkCode=ogi&th=1&psc=1` : '');
+  if (!affUrl.includes('tag=pettechsg-22')) {
     console.error(`✖ Product #${i + 1} (${p.asin}) missing correct affiliate tag!`);
     errors++;
   }
@@ -66,7 +68,7 @@ if (fs.existsSync(distDir)) {
 
 console.log('================================================================');
 if (errors === 0) {
-  console.log(`✔ QUALITY AUDIT PASSED: 100% compliance across all 52 products.`);
+  console.log(`✔ QUALITY AUDIT PASSED: 100% compliance across all ${products.length} products.`);
 } else {
   console.error(`✖ QUALITY AUDIT FAILED with ${errors} issues.`);
   process.exit(1);
