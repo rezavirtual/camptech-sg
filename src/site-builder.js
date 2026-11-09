@@ -1404,9 +1404,9 @@ footer.camp-footer {
         <div class="guides-grid">
           ${guides.map(g => `
             <div class="guide-card">
-              <span class="guide-badge">${g.readTime}</span>
+              <span class="guide-badge">${g.readTime || "6 min read"}</span>
               <h3 class="guide-title">${g.title}</h3>
-              <p class="guide-excerpt">${g.excerpt}</p>
+              <p class="guide-excerpt">${g.excerpt || g.summary}</p>
               <a href="./guides/${g.slug}.html" style="font-weight: 600; font-size: 0.88rem; color: var(--camp-primary);">
                 Read Full Blueprint &rarr;
               </a>
